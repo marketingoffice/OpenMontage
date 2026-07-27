@@ -25,6 +25,8 @@ When you add a new component, append it here and in `src/components/index.ts`.
 | `anime_scene` | `AnimeScene` | `images` (list) | `particles`, `lightingFrom`, `lightingTo`, `vignette` | Still-image anime scene with particles + camera motion |
 | **`terminal_scene`** | **`TerminalScene`** | **`steps`** (list of cmd/out/pause/pill) | **`terminalTitle`, `prompt`, `accentColor`** | **Synthetic terminal animation — NO real capture needed. See [`.agents/skills/synthetic-screen-recording/SKILL.md`](../.agents/skills/synthetic-screen-recording/SKILL.md)** |
 | **`screenshot_scene`** | **`ScreenshotScene`** | **`backgroundImage`** (path in `public/`), **`screenshotSteps`** (list of overlays) | **`screenshotSize` (natural px w/h), `cursorStartAt`, `accentColor`** | **Approach-1 synthetic UI — drop any screenshot, animate scripted overlays on top (cursor, click_pulse, type_into, bubble_append, typing_dots, highlight_box, callout_balloon). Viewer-indistinguishable from a real recording for 15–30s focused demos. Coordinates are normalized (0–1) against the contain-fit rect. See [`.agents/skills/synthetic-ui-recording/SKILL.md`](../.agents/skills/synthetic-ui-recording/SKILL.md) (planned).** |
+| `scatter_assembly` | `ScatterAssembly` | `scatterMode` (`"scatter"` \| `"assemble"`) | `chips` (string list), `totalLabel`, `accentColor`, `backgroundColor` | Bespoke atelier scene — data/spreadsheet fragments drift apart (`scatter`) or converge into a structured total (`assemble`). Built for the HomeEstimator.ai GC montage's "chaotic manual takeoff" beats; deterministic seeded layout, no real randomness. |
+| `brand_reveal` | `BrandReveal` | `logoSrc` (path) | `headline`, `subline`, `showUIBuild`, `accentColor`, `backgroundColor` | Bespoke atelier scene — logo scales in with a soft glow; optionally builds on a mocked line-itemed estimate panel (`showUIBuild=true`) or a CTA headline/subline below the logo. |
 
 ---
 
@@ -36,6 +38,7 @@ When you add a new component, append it here and in `src/components/index.ts`.
 | `stat_reveal` | `StatReveal` | `text` | `subtitle`, `accentColor`, `position` | Corner stat badge |
 | `hero_title` | `HeroTitle` (as overlay) | `text` | `subtitle` | Full-frame title overlay |
 | **`provider_chip`** | **`ProviderChip`** | **`providers`** (list of strings) | **`cycleSeconds`, `position`, `accentColor`, `label`** | **Rotating badge that cycles through provider names — used in AI-generated-motion scenes to show which model produced the clip** |
+| `logo_watermark` | `LogoWatermark` | `logoSrc` (path) | `opacity`, `widthPx` | Small blended brand logo, fixed bottom-left, fades in. Used to carry brand presence through footage/graphics scenes without a full brand-reveal beat. |
 
 ---
 

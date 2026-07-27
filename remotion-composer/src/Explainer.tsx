@@ -10,7 +10,8 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { loadFont } from "@remotion/google-fonts/SpaceGrotesk";
+// Google Fonts network fetch removed — this environment blocks fonts.gstatic.com.
+// System font stack renders visually close to Space Grotesk for our purposes.
 
 // Resolve asset path — handle URLs, absolute paths (Windows/Unix), and public/ relative paths
 function resolveAsset(src: string): string {
@@ -54,14 +55,14 @@ import type { TerminalStep } from "./components/TerminalScene";
 import { ScreenshotScene } from "./components/ScreenshotScene";
 import type { ScreenshotStep } from "./components/ScreenshotScene";
 import { ProviderChip } from "./components/ProviderChip";
+import { ScatterAssembly } from "./components/ScatterAssembly";
+import { BrandReveal } from "./components/BrandReveal";
+import { LogoWatermark } from "./components/LogoWatermark";
 import type { ParticleType } from "./components/ParticleOverlay";
 import { resolveTheme, type ThemeConfig, DEFAULT_THEME } from "./Root";
 
-// Load Space Grotesk font for cinematic typography
-const { fontFamily } = loadFont("normal", {
-  weights: ["400", "700"],
-  subsets: ["latin"],
-});
+// System font stack for cinematic typography (no network font fetch)
+const fontFamily = "'Space Grotesk', 'Inter', system-ui, sans-serif";
 
 // ---------------------------------------------------------------------------
 // Animated Background — Gradient Mesh + Floating Orbs
@@ -276,10 +277,19 @@ interface Cut {
   screenshotSteps?: ScreenshotStep[];
   screenshotSize?: { width: number; height: number };
   cursorStartAt?: [number, number];
+  // Scatter/assemble scene props (type: "scatter_assembly")
+  scatterMode?: "scatter" | "assemble";
+  chips?: string[];
+  totalLabel?: string;
+  // Brand reveal props (type: "brand_reveal")
+  logoSrc?: string;
+  headline?: string;
+  subline?: string;
+  showUIBuild?: boolean;
 }
 
 interface Overlay {
-  type: "section_title" | "stat_reveal" | "hero_title" | "provider_chip";
+  type: "section_title" | "stat_reveal" | "hero_title" | "provider_chip" | "logo_watermark";
   in_seconds: number;
   out_seconds: number;
   text?: string;
@@ -290,6 +300,10 @@ interface Overlay {
   providers?: string[];
   cycleSeconds?: number;
   label?: string;
+  // logo_watermark
+  logoSrc?: string;
+  opacity?: number;
+  widthPx?: number;
 }
 
 interface AudioLayer {
@@ -616,6 +630,30 @@ const SceneRenderer: React.FC<{ cut: Cut; theme: ThemeConfig }> = ({ cut, theme 
       />
     );
   }
+  if (cut.type === "scatter_assembly" && cut.scatterMode) {
+    return (
+      <ScatterAssembly
+        mode={cut.scatterMode}
+        accentColor={accent}
+        backgroundColor={cut.backgroundColor || "transparent"}
+        textColor={textColor === theme.textColor ? theme.textColor : textColor}
+        chips={cut.chips}
+        totalLabel={cut.totalLabel}
+      />
+    );
+  }
+  if (cut.type === "brand_reveal" && cut.logoSrc) {
+    return (
+      <BrandReveal
+        logoSrc={cut.logoSrc}
+        headline={cut.headline}
+        subline={cut.subline}
+        showUIBuild={cut.showUIBuild}
+        accentColor={accent}
+        backgroundColor={cut.backgroundColor || theme.backgroundColor}
+      />
+    );
+  }
   if (cut.type === "screenshot_scene" && cut.backgroundImage && cut.screenshotSteps) {
     return (
       <ScreenshotScene
@@ -760,6 +798,11 @@ const OverlayRenderer: React.FC<{ overlay: Overlay }> = ({ overlay }) => {
   }
   if (overlay.type === "hero_title") {
     return <HeroTitle title={overlay.text} subtitle={overlay.subtitle} />;
+  }
+  if (overlay.type === "logo_watermark" && overlay.logoSrc) {
+    return (
+      <LogoWatermark logoSrc={overlay.logoSrc} opacity={overlay.opacity} widthPx={overlay.widthPx} />
+    );
   }
   if (overlay.type === "provider_chip" && overlay.providers) {
     return (
