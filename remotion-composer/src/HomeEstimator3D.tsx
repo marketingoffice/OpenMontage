@@ -1,5 +1,8 @@
 import { ThreeCanvas } from "@remotion/three";
 import { RoundedBox } from "@react-three/drei";
+import { useThree } from "@react-three/fiber";
+import { EffectComposer, Bloom, Vignette } from "@react-three/postprocessing";
+import { RoomEnvironment } from "three/examples/jsm/environments/RoomEnvironment.js";
 import * as THREE from "three";
 import React, { useMemo } from "react";
 import {
@@ -11,6 +14,34 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
+
+// ---------------------------------------------------------------------------
+// "Settle into shot" camera helper — eases from the previous held value into
+// the new one over `transitionSeconds` at the start of each beat, then holds
+// static for the rest of the beat. Reads as deliberately blocked shots
+// instead of one continuous drift across the whole timeline.
+// ---------------------------------------------------------------------------
+function easedHold(
+  seconds: number,
+  breakpoints: number[],
+  values: number[],
+  transitionSeconds = 0.9
+): number {
+  for (let i = breakpoints.length - 1; i >= 0; i--) {
+    if (seconds >= breakpoints[i]) {
+      const from = i === 0 ? values[0] : values[i - 1];
+      const to = values[i];
+      const t = interpolate(
+        seconds,
+        [breakpoints[i], breakpoints[i] + transitionSeconds],
+        [0, 1],
+        { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.out(Easing.cubic) }
+      );
+      return interpolate(t, [0, 1], [from, to]);
+    }
+  }
+  return values[0];
+}
 
 export interface HomeEstimator3DProps {
   vo_src?: string;
@@ -117,15 +148,53 @@ const DataChip: React.FC<{
   return (
     <group position={[x, y + bob, z]} rotation={[rot * 0.3, spin, rot]}>
       <RoundedBox args={[0.9, 0.55, 0.08]} radius={0.06} smoothness={4}>
-        <meshStandardMaterial color={hue} metalness={0.25} roughness={0.5} transparent opacity={opacity} />
+        <meshStandardMaterial color={hue} metalness={0.55} roughness={0.3} transparent opacity={opacity} envMapIntensity={1.1} />
       </RoundedBox>
     </group>
   );
 };
 
 // ---------------------------------------------------------------------------
-// Simplified 3D house-mark logo (matches the HomeEstimator.ai brand silhouette)
+// Procedural studio environment map (no network HDRI fetch) — gives real
+// metal reflections instead of relying on point lights alone.
 // ---------------------------------------------------------------------------
+const SceneEnvironment: React.FC = () => {
+  const { gl, scene } = useThree();
+  useMemo(() => {
+    const pmrem = new THREE.PMREMGenerator(gl);
+    const envTexture = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    scene.environment = envTexture;
+    pmrem.dispose();
+    return envTexture;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [gl, scene]);
+  return null;
+};
+
+// ---------------------------------------------------------------------------
+// House-mark logo — a single extruded, beveled silhouette (matches the
+// HomeEstimator.ai brand mark) instead of disjoint cone/box primitives.
+// ---------------------------------------------------------------------------
+const houseGeometry = new THREE.ExtrudeGeometry(
+  (() => {
+    const s = new THREE.Shape();
+    s.moveTo(-0.65, -0.55);
+    s.lineTo(0.65, -0.55);
+    s.lineTo(0.65, 0.05);
+    s.lineTo(0.85, 0.05);
+    s.lineTo(0, 0.78);
+    s.lineTo(-0.85, 0.05);
+    s.lineTo(-0.65, 0.05);
+    s.closePath();
+    return s;
+  })(),
+  { depth: 0.55, bevelEnabled: true, bevelThickness: 0.035, bevelSize: 0.035, bevelSegments: 3, curveSegments: 1 }
+);
+houseGeometry.center();
+
+const chimneyGeometry = new THREE.BoxGeometry(0.2, 0.55, 0.2);
+const doorGeometry = new THREE.PlaneGeometry(0.28, 0.5);
+
 const HouseMark: React.FC<{ frame: number; fps: number; scale: number; opacity: number }> = ({
   frame,
   fps,
@@ -136,24 +205,13 @@ const HouseMark: React.FC<{ frame: number; fps: number; scale: number; opacity: 
   if (opacity <= 0.01) return null;
   return (
     <group scale={scale} rotation={[0.1, spin, 0]}>
-      {/* Roof */}
-      <mesh position={[0, 0.95, 0]} rotation={[0, Math.PI / 4, 0]}>
-        <coneGeometry args={[1.05, 0.9, 4]} />
-        <meshStandardMaterial color={GOLD} metalness={0.4} roughness={0.35} transparent opacity={opacity} />
+      <mesh geometry={houseGeometry}>
+        <meshStandardMaterial color={GOLD} metalness={0.75} roughness={0.28} transparent opacity={opacity} envMapIntensity={1.4} />
       </mesh>
-      {/* Body */}
-      <mesh position={[0, 0.1, 0]}>
-        <boxGeometry args={[1.3, 1.1, 1.3]} />
-        <meshStandardMaterial color={GOLD_LIGHT} metalness={0.3} roughness={0.45} transparent opacity={opacity} />
+      <mesh geometry={chimneyGeometry} position={[0.55, 0.55, 0.05]}>
+        <meshStandardMaterial color={GOLD} metalness={0.7} roughness={0.3} transparent opacity={opacity} envMapIntensity={1.4} />
       </mesh>
-      {/* Chimney */}
-      <mesh position={[0.6, 1.3, 0.2]}>
-        <boxGeometry args={[0.22, 0.6, 0.22]} />
-        <meshStandardMaterial color={GOLD} metalness={0.4} roughness={0.35} transparent opacity={opacity} />
-      </mesh>
-      {/* Door cutout suggestion */}
-      <mesh position={[0, -0.15, 0.66]}>
-        <boxGeometry args={[0.3, 0.55, 0.05]} />
+      <mesh geometry={doorGeometry} position={[0, -0.32, 0.31]}>
         <meshStandardMaterial color={INK} metalness={0.1} roughness={0.8} transparent opacity={opacity} />
       </mesh>
     </group>
@@ -184,25 +242,22 @@ const DashboardPanel: React.FC<{ opacity: number; position: [number, number, num
 // ---------------------------------------------------------------------------
 // Scene — everything lives in one persistent Canvas; beats are time-windowed
 // ---------------------------------------------------------------------------
+// Beat boundaries shared by all camera axes — matches the 7 VO-synced beats.
+const BEATS = [0, 4.2, 8.7, 19.06, 24.93, 31.4, 34.0];
+
 const Scene: React.FC<{ seconds: number }> = ({ seconds }) => {
   const { fps } = useVideoConfig();
   const frame = useCurrentFrame();
 
-  // Camera dolly across the whole timeline
-  const camZ = interpolate(
-    seconds,
-    [0, 4.2, 8.7, 19.06, 24.93, 31.4, 34.0, 37.5],
-    [11, 9.5, 9, 8.5, 7.5, 9, 8, 6.5],
-    { extrapolateLeft: "clamp", extrapolateRight: "clamp", easing: Easing.inOut(Easing.ease) }
-  );
-  const camY = interpolate(seconds, [0, 8.7, 24.93, 37.5], [0.4, 0.2, 0.6, 0.3], {
+  // Camera settles into a distinct held shot per beat instead of drifting
+  // continuously — reads as deliberate blocking rather than a slow float.
+  const camZ = easedHold(seconds, BEATS, [11, 9.5, 9.2, 8.2, 7.2, 8.6, 7.5]);
+  const camY = easedHold(seconds, BEATS, [0.4, 0.3, 0.15, 0.25, 0.55, 0.5, 0.3]);
+  const camAngle = easedHold(seconds, BEATS, [0, 0.15, -0.1, 0.05, 0.5, -0.3, 0]);
+  // Which beat are we in — drives DoF strength (stronger during hero holds).
+  const heroFocus = interpolate(seconds, [22.5, 24.93, 34.0, 37.5], [0, 1, 1, 1], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
-  });
-  const camAngle = interpolate(seconds, [0, 24.93, 31.4, 37.5], [0, 0.5, -0.3, 0], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.inOut(Easing.ease),
   });
 
   // scatterAmount: 0 = tidy/assembled, 1 = fully scattered
@@ -247,13 +302,21 @@ const Scene: React.FC<{ seconds: number }> = ({ seconds }) => {
 
   return (
     <>
-      <hemisphereLight args={["#fff7e0", INK, 1.3]} />
-      <ambientLight intensity={0.7} />
-      <pointLight position={[6, 6, 6]} intensity={230} color={GOLD_LIGHT} />
-      <pointLight position={[-7, -3, 4]} intensity={150} color={GOLD} />
-      <pointLight position={[0, -4, -6]} intensity={110} color="#ffffff" />
+      <SceneEnvironment />
+      {/* Environment map now carries most of the shading; these are just a
+          rim/key light pair for a bit of directional sparkle. */}
+      <ambientLight intensity={0.35} />
+      <pointLight position={[6, 6, 6]} intensity={90} color={GOLD_LIGHT} />
+      <pointLight position={[-6, -3, 4]} intensity={40} color={GOLD} />
 
-      <perspectiveCamera makeDefault position={camPos} fov={45} onUpdate={(c) => c.lookAt(0, 0.2, 0)} />
+      <perspectiveCamera
+        makeDefault
+        position={camPos}
+        fov={45}
+        near={1}
+        far={30}
+        onUpdate={(c) => c.lookAt(0, 0.2, 0)}
+      />
 
       <group>
         {Array.from({ length: 14 }).map((_, i) => (
@@ -273,6 +336,15 @@ const Scene: React.FC<{ seconds: number }> = ({ seconds }) => {
       </group>
 
       {panelOpacity > 0.01 && <DashboardPanel opacity={panelOpacity} position={[1.6, 0, 0]} />}
+
+      {/* DepthOfField was dropped: under this sandbox's software-rendered
+          WebGL (SwiftShader, no GPU), its multi-pass bokeh sampling made
+          full-video render time impractical (est. 5h+ at 1125 frames).
+          Bloom + Vignette are single-pass and stay well within budget. */}
+      <EffectComposer>
+        <Bloom luminanceThreshold={0.55} luminanceSmoothing={0.25} intensity={0.45} />
+        <Vignette eskil={false} offset={0.25} darkness={interpolate(heroFocus, [0, 1], [0.35, 0.55])} />
+      </EffectComposer>
     </>
   );
 };

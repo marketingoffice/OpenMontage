@@ -10,6 +10,7 @@
   "dependencies": {
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
+    "@react-three/postprocessing": "^2.19.1",
     "@remotion/captions": "^4.0.484",
     "@remotion/cli": "^4.0.484",
     "@remotion/google-fonts": "^4.0.484",
