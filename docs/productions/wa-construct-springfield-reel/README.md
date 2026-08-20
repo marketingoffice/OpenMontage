@@ -64,3 +64,20 @@ Palette is black + gold. The gold in `brand/` is sampled from a pasted image
 (~`#BFA06A`) and needs confirming against the official brand value. The lockups here are
 a **reconstruction**, not the official asset — replace them with the real file before
 anything ships. No pricing, no phone/URL, no award claims appear in the piece.
+
+## Starting the next session
+
+The cloud container ships without ffmpeg, ffprobe, or the project's Python
+dependencies, so every video tool in the registry reports UNAVAILABLE on a cold start.
+Run `scripts/cloud-setup.sh` first, or paste it into the environment's **Setup script**
+field so it runs before Claude starts. It measurably changes what the registry reports:
+
+| Capability | Cold start | After setup |
+|---|---|---|
+| `video_post` | 7 of 9 | 9 of 9 |
+| `analysis` | 5 of 13 | 7 of 13 |
+
+Then: read this README, pull the source from Drive, and resume at the `assets` stage.
+The proposal checkpoint is `awaiting_human` — the plan in `proposal_packet.json` was
+approved in conversation (9:16 vertical, ffmpeg runtime, 45s), so record that approval
+before advancing.
