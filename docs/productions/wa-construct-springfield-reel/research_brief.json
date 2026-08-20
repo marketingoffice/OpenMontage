@@ -1,0 +1,184 @@
+{
+  "version": "1.0",
+  "topic": "WA Construct \u2014 271 Springfield Ave, Paramus NJ custom-home walkthrough cut to a 45-second beat-synced luxury reel",
+  "research_date": "2026-08-20",
+  "landscape": {
+    "existing_content": [
+      {
+        "title": "271 Springfield Ave branded walkthrough (the source file)",
+        "source": "google drive",
+        "angle": "Continuous listing tour",
+        "what_it_covers": "Full-property gimbal coverage: exterior, entry, kitchen, bedrooms, baths, laundry, lower level, deck",
+        "what_it_misses": "No cut rhythm, no brand lockup, address burn-in ties it to one listing, far too long for social"
+      },
+      {
+        "title": "Luxury real-estate reels (IG/TikTok category)",
+        "source": "instagram/tiktok",
+        "angle": "Beat-cut property montage",
+        "what_it_covers": "30-60s, 0.5-2s shots cut on kick and snare, no voiceover, brand end-card",
+        "what_it_misses": "Usually generic room wides; rarely holds long enough on the material detail that justifies a custom-build price"
+      },
+      {
+        "title": "Builder brand films",
+        "source": "youtube",
+        "angle": "Craft-and-process narrative",
+        "what_it_covers": "Slower, interview-led, shows the build story",
+        "what_it_misses": "Wrong pace and length for feed distribution; needs a short-form companion cut"
+      }
+    ],
+    "saturated_angles": [
+      "Slow ambient piano tour with dissolve transitions",
+      "Text-overlay spec dumps (bed/bath/sqft) stamped on every shot"
+    ],
+    "underserved_gaps": [
+      "Material-forward cutting: herringbone oak, quartz veining, unlacquered brass, blue onyx \u2014 detail inserts carry the craft story better than room wides",
+      "Cut rhythm locked to the track's real measured bar grid rather than an eyeballed pace"
+    ]
+  },
+  "data_points": [
+    {
+      "claim": "Supplied track is 114.0 BPM, not 120 BPM \u2014 beat 0.5263s / bar 2.1053s",
+      "source_url": "file:///home/user/OpenMontage/projects/wa-construct-springfield-reel/assets/music/track.mp3",
+      "source_name": "Local tempo analysis (spectral flux + comb filter)",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "First downbeat of the track \u2014 1.589s",
+      "source_url": "file:///home/user/OpenMontage/projects/wa-construct-springfield-reel/assets/music/track.mp3",
+      "source_name": "kick-band downbeat phase scoring",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "Main drop (kick enters full) \u2014 33.168s (bar 15)",
+      "source_url": "file:///home/user/OpenMontage/projects/wa-construct-springfield-reel/assets/music/track.mp3",
+      "source_name": "low-band energy step 0.023 -> 0.302 -> 0.397",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "One-bar breaks / fills usable as accent cuts \u2014 47.905s, 64.747s, 81.589s, 117.378s",
+      "source_url": "file:///home/user/OpenMontage/projects/wa-construct-springfield-reel/assets/music/track.mp3",
+      "source_name": "kick energy dropout bars",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "Second full drop later in track \u2014 119.484s (bar 56)",
+      "source_url": "file:///home/user/OpenMontage/projects/wa-construct-springfield-reel/assets/music/track.mp3",
+      "source_name": "kick 0.002 -> 0.319",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "Loudest sustained window \u2014 peak momentary loudness -7.0 LUFS at 68s",
+      "source_url": "file:///home/user/OpenMontage/projects/wa-construct-springfield-reel/assets/music/track.mp3",
+      "source_name": "audio_energy tool (ebur128)",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "Track total duration \u2014 168.46s \u2014 no loop needed for a 45s reel",
+      "source_url": "file:///home/user/OpenMontage/projects/wa-construct-springfield-reel/assets/music/track.mp3",
+      "source_name": "audio_energy tool",
+      "credibility": "primary_source"
+    }
+  ],
+  "audience_insights": {
+    "common_questions": [
+      "Who built this and what is the level of finish?",
+      "What do the kitchen, primary bath and lower level actually look like?",
+      "Is this the builder I should call for my own project?"
+    ],
+    "misconceptions": [
+      {
+        "myth": "A luxury build reads as luxury from wide shots",
+        "reality": "It reads from material detail \u2014 grain direction, veining, hardware finish \u2014 which needs its own inserts in the cut"
+      },
+      {
+        "myth": "Faster cutting always means higher energy",
+        "reality": "The break bars need air; holding through a kick dropout is what makes the next drop land"
+      }
+    ],
+    "knowledge_level": "general"
+  },
+  "angles_discovered": [
+    {
+      "name": "Material-first drop reel",
+      "hook": "The craft reads in the grain, the veining and the brass \u2014 not in the wide shots.",
+      "type": "evergreen",
+      "why_now": "The 114 BPM bar grid gives a natural 2.1s room-shot / 0.53s detail-insert rhythm that matches how buyers actually scan a finished home.",
+      "grounded_in": [
+        "114.0 BPM measurement",
+        "bar = 2.1053s"
+      ]
+    },
+    {
+      "name": "Break-bar reveal into the suite",
+      "hook": "The track pulls its kick for exactly one bar \u2014 hold there and the next room lands like a reveal.",
+      "type": "narrative",
+      "why_now": "Measured kick dropouts at 47.91s and 64.75s give two free reveal moments inside a 45s window without inventing transitions.",
+      "grounded_in": [
+        "One-bar breaks at 47.905s and 64.747s"
+      ]
+    },
+    {
+      "name": "Clean-plate brand open",
+      "hook": "Kill the listing address and the tour becomes a builder brand asset.",
+      "type": "contrarian",
+      "why_now": "The burned-in address dates the file to one listing; masking it makes the same footage reusable across every channel WA Construct runs.",
+      "grounded_in": [
+        "Hardcoded address burn-in 00:00-00:06 in the source"
+      ]
+    }
+  ],
+  "visual_references": [
+    {
+      "description": "Source walkthrough \u2014 271 Springfield Ave branded mp4 (242MB, Google Drive)",
+      "url": "https://drive.google.com/file/d/1REmUql7zOeVY2jLlfZ4h3FqmuZ4ij-rC/view",
+      "what_works": "Continuous gimbal coverage of every room gives dense material to cut from; its weaknesses for social are length, the address burn-in, and no cut rhythm."
+    }
+  ],
+  "sources": [
+    {
+      "url": "file:///root/.claude/uploads/31807f1d-3c95-5809-ba28-b8b77fff75f2/22914fdd-rediskasoundislandtropicalbackgroundmusic575712.mp3",
+      "title": "Supplied track \u2014 Redis Kasound, Island Tropical Background Music (mp3, 168.5s)",
+      "used_for": "Tempo, bar grid, drop and break timings",
+      "reliability": "primary"
+    },
+    {
+      "url": "file:///home/user/OpenMontage/tools/analysis/audio_energy.py",
+      "title": "audio_energy tool run (ffmpeg ebur128 momentary loudness)",
+      "used_for": "Loudness profile, best 45s window, loop requirement",
+      "reliability": "primary"
+    },
+    {
+      "url": "file:///tmp/scratchpad/beat_analysis.py",
+      "title": "Local spectral-flux onset + autocorrelation tempo analysis",
+      "used_for": "114.0 BPM measurement and first-beat phase",
+      "reliability": "primary"
+    },
+    {
+      "url": "file:///tmp/scratchpad/structure.py",
+      "title": "Bar-grid kick-band energy map of the track",
+      "used_for": "Drop at 33.17s, break bars at 47.91s / 64.75s, second drop at 119.48s",
+      "reliability": "primary"
+    },
+    {
+      "url": "https://drive.google.com/file/d/1REmUql7zOeVY2jLlfZ4h3FqmuZ4ij-rC/view",
+      "title": "Source walkthrough \u2014 271 Springfield Ave, Paramus NJ (branded mp4, 242MB)",
+      "used_for": "The footage the edit is built from; retrieval blocked in this session",
+      "reliability": "primary"
+    },
+    {
+      "url": "file:///home/user/OpenMontage/pipeline_defs/cinematic.yaml",
+      "title": "OpenMontage cinematic pipeline manifest",
+      "used_for": "Stage plan, gates, and tool availability for a footage-led music edit",
+      "reliability": "primary"
+    }
+  ],
+  "research_summary": "The brief is fully specified creatively, so research went where the real unknowns were: the music grid and the source file. The supplied track runs 114.0 BPM (bar = 2.1053s), not the 120 BPM assumed in the brief \u2014 locking cuts to a 120 grid would drift about 5% and read as sloppy by the second section. Structure: pluck intro to 33.17s, main drop at 33.17s, one-bar kick dropouts at 47.91s and 64.75s, breakdown at 81.59s, second drop at 119.48s. For a 45s reel the strongest music window is 24.747s -> 69.75s (21 bars): 4 bars of plucks, drop at 8.4s in, break at 23.2s in, second break at 40.0s in \u2014 which maps cleanly onto exterior / kitchen / upstairs / primary suite / lower level / deck+logo. The source walkthrough itself could not be retrieved: this environment's egress policy denies the Google Drive download host, and the file is 242MB so the Drive connector's base64 read is not a viable path. The WA Construct logo also arrived as an inline image, not a file, so there is no asset on disk to composite.",
+  "metadata": {
+    "pipeline": "cinematic",
+    "deliverable": "45s beat-synced reel",
+    "blockers": [
+      "source_footage_unavailable",
+      "logo_file_missing"
+    ]
+  }
+}

@@ -1,0 +1,311 @@
+{
+  "version": "1.0",
+  "concept_options": [
+    {
+      "id": "c1",
+      "title": "Beat-Locked Material Reel",
+      "hook": "Herringbone, veined quartz, brass \u2014 one house, 45 seconds, every cut on the kick.",
+      "narrative_structure": "journey",
+      "visual_approach": "The user's own sequence, compressed to the track's measured 114 BPM bar grid: 4 bars of plucks on the exterior, hard drop into the kitchen at 0:08.4, one-bar holds on both kick dropouts, tightest cutting on the lower level, deck sweep into the logo. Wides land on downbeats, material detail inserts on off-beats.",
+      "suggested_playbook": "premium-minimalist",
+      "target_audience": "North Jersey homeowners evaluating a custom builder",
+      "target_platform": "instagram",
+      "target_duration_seconds": 45,
+      "key_points": [
+        "Every room in the brief appears, weighted by how much material story it carries",
+        "Cut rhythm is derived from the track's real grid, not an eyeballed pace",
+        "The listing address is masked so the piece works as a builder brand asset"
+      ],
+      "core_message": "WA Construct finishes a home to a level you can see in a half-second insert.",
+      "cta": "Follow WA Construct \u2014 Living. Inspired.",
+      "tone": "confident, material-forward, no voiceover",
+      "grounded_in": [
+        "114.0 BPM measurement",
+        "drop at 33.168s",
+        "break bars at 47.905s and 64.747s"
+      ],
+      "why_this_works": "The measured structure gives exactly the shape the brief asks for inside 45s: a pluck intro, a drop, two engineered breaths, and a lift under the logo. Nothing has to be faked with dissolves."
+    },
+    {
+      "id": "c2",
+      "title": "Detail-First Cold Open",
+      "hook": "Start on brass. Pull back and the whole house is already yours.",
+      "narrative_structure": "story",
+      "visual_approach": "Invert the brief: open on three tight material inserts (brass tap, quartz vein, herringbone grain) during the plucks, and hold the exterior reveal for the drop at 0:08.4. The house is then toured in the same order, but every section opens on a detail and resolves to the room wide.",
+      "suggested_playbook": "premium-minimalist",
+      "target_audience": "Design-led buyers and architects",
+      "target_platform": "instagram",
+      "target_duration_seconds": 45,
+      "key_points": [
+        "Craft leads, real estate follows",
+        "The exterior reveal becomes a payoff instead of an establishing shot",
+        "Denser detail coverage than a standard tour reel"
+      ],
+      "core_message": "This is a builder whose details survive a close-up.",
+      "cta": "Follow WA Construct \u2014 Living. Inspired.",
+      "tone": "tactile, patient in, aggressive out",
+      "grounded_in": [
+        "Material-first drop reel angle",
+        "drop at 33.168s"
+      ],
+      "why_this_works": "The research landscape shows room-wide tours are saturated; leading on material is the underserved gap. Risk: it delays the property context by 8 seconds, which can cost feed retention."
+    },
+    {
+      "id": "c3",
+      "title": "Two-Half Split \u2014 Light Then Dark",
+      "hook": "Upstairs is white oak and skylight. Downstairs is dark quartz and blue onyx.",
+      "narrative_structure": "comparison",
+      "visual_approach": "Reorder the tour into two contrasting movements: everything light (exterior, kitchen, bedrooms, primary suite) across the first drop section, then a hard tonal flip at the 0:40 break into the dark lower level \u2014 secondary kitchen, brass domes, blue onyx bath \u2014 with the deck and logo closing outside.",
+      "suggested_playbook": "clean-professional",
+      "target_audience": "Buyers who want to see range in one property",
+      "target_platform": "instagram",
+      "target_duration_seconds": 45,
+      "key_points": [
+        "Palette contrast carries the structure instead of floor-by-floor order",
+        "The lower level gets real weight rather than a single bar",
+        "One hard tonal flip is more memorable than eight even cuts"
+      ],
+      "core_message": "One build, two completely different moods.",
+      "cta": "Follow WA Construct \u2014 Living. Inspired.",
+      "tone": "graphic, contrast-led",
+      "grounded_in": [
+        "Break-bar reveal angle",
+        "break at 64.747s"
+      ],
+      "why_this_works": "Uses the second kick dropout as a palette pivot rather than a breath. Risk: it departs from the sequential room order the brief specified, and the deck outro has to share the last bar with the flip."
+    }
+  ],
+  "selected_concept": {
+    "concept_id": "c1",
+    "rationale": "The brief already specifies the room order and the emotional shape; c1 delivers exactly that against the track's measured grid rather than re-inventing the direction. c2 and c3 are offered as real alternatives if the user wants a stronger creative departure.",
+    "modifications": [
+      "Compressed from the brief's 1:39 timeline to 45s: the primary suite drops from 11s to 6.3s and the lower level from 19s to 2.1s",
+      "Cut grid rebuilt on the track's measured 114 BPM instead of the assumed 120 BPM"
+    ]
+  },
+  "production_plan": {
+    "pipeline": "cinematic",
+    "playbook": "premium-minimalist",
+    "render_runtime": "ffmpeg",
+    "stages": [
+      {
+        "stage": "script",
+        "tools": [
+          {
+            "tool_name": "scene_detect",
+            "role": "Find the source's own shot boundaries so cuts never land mid-whip-pan",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0.0,
+            "why_this_provider": "Local, deterministic, already installed"
+          }
+        ],
+        "approach": "Convert the beat map into a shot list: for each of the 30-ish slots, name the source timecode range that fills it. Requires the source file.",
+        "fallback_if_unavailable": "Manual scrub via frame_sampler if scene detection under-segments a long gimbal take"
+      },
+      {
+        "stage": "scene_plan",
+        "tools": [
+          {
+            "tool_name": "frame_sampler",
+            "role": "Pull candidate frames at each detected boundary to pick the strongest in/out points",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0.0,
+            "why_this_provider": "Local frame extraction, no API cost"
+          }
+        ],
+        "approach": "Lock in/out timecodes per slot against the beat grid; verify each slot's content matches the brief's room order and material callouts.",
+        "fallback_if_unavailable": "Sample on a fixed interval instead of at boundaries"
+      },
+      {
+        "stage": "assets",
+        "tools": [
+          {
+            "tool_name": "video_trimmer",
+            "role": "Cut the 30-ish segments from the source at frame accuracy",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0.0,
+            "why_this_provider": "Local, lossless-capable, no re-encode drift"
+          },
+          {
+            "tool_name": "audio_energy",
+            "role": "Already run \u2014 supplied the loudness profile and window choice",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0.0,
+            "why_this_provider": "Local ebur128 analysis"
+          }
+        ],
+        "approach": "Trim segments, build the address mask plate for the intro, prepare the logo lockup asset.",
+        "fallback_if_unavailable": "None needed \u2014 all local"
+      },
+      {
+        "stage": "edit",
+        "tools": [],
+        "approach": "Write edit_decisions: the cut list with music-locked in/out times, the address mask (blur or crop), the deck fade-to-plate, and the logo overlay timing.",
+        "fallback_if_unavailable": "n/a"
+      },
+      {
+        "stage": "compose",
+        "tools": [
+          {
+            "tool_name": "video_compose",
+            "role": "Assemble the cut, mask, fade, logo overlay and music mix",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0.0,
+            "why_this_provider": "Source-footage concat with overlays is exactly ffmpeg's job; no synthetic scenes are needed"
+          },
+          {
+            "tool_name": "audio_mixer",
+            "role": "Mix the music bed, set the level, fade out over the final 1.5s",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0.0,
+            "why_this_provider": "Local mixing"
+          },
+          {
+            "tool_name": "color_grade",
+            "role": "Single consistent grade pass across all segments",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0.0,
+            "why_this_provider": "Keeps interior/exterior white balance from jumping cut to cut"
+          }
+        ],
+        "approach": "Render 45.0s at the source frame rate, H.264, then verify duration and cut positions against the beat grid.",
+        "fallback_if_unavailable": "If the user picks Remotion instead, route through OffthreadVideo scenes"
+      }
+    ],
+    "quality_tradeoffs": [
+      {
+        "tradeoff": "FFmpeg direct cut vs Remotion re-composition of the footage",
+        "recommendation": "FFmpeg",
+        "quality_impact": "FFmpeg cuts the original frames with one grade pass \u2014 no browser re-render of 4K footage, no generational quality loss, and far faster. Remotion would only pay off if the reel needed animated title cards or motion-graphic overlays, which this brief does not."
+      },
+      {
+        "tradeoff": "Address burn-in: blur/mask patch vs crop-in",
+        "recommendation": "Decide after seeing the frame \u2014 crop-in if the text sits near an edge, patch-blur if it sits over detail",
+        "quality_impact": "Crop-in loses a little framing; a patch reads cleanly if the background behind the text is even"
+      },
+      {
+        "tradeoff": "45s reel vs the brief's 1:39 timeline",
+        "recommendation": "45s as requested",
+        "quality_impact": "The lower level compresses to a single bar of fast hits; if that section matters commercially, a 60s cut would give it a full 4 bars"
+      }
+    ],
+    "alternative_paths": []
+  },
+  "cost_estimate": {
+    "total_estimated_usd": 0.0,
+    "line_items": [
+      {
+        "tool": "ffmpeg local toolchain",
+        "operation": "Scene detect, trim, mask, grade, overlay, mix, render",
+        "quantity": 1,
+        "estimated_usd": 0.0,
+        "notes": "Every tool in this plan is local \u2014 no API providers are configured or needed for a footage-led cut"
+      }
+    ],
+    "budget_verdict": "within_budget",
+    "savings_options": []
+  },
+  "approval": {
+    "status": "pending",
+    "user_notes": "Blocked pending: (1) a retrievable copy of the source footage, (2) the WA Construct logo as a file, (3) confirmation of aspect ratio, (4) confirmation of render runtime (ffmpeg recommended; Remotion is being installed so it is a live option)."
+  },
+  "metadata": {
+    "beat_map": {
+      "track": "assets/music/track.mp3",
+      "measured_bpm": 114.0,
+      "brief_assumed_bpm": 120,
+      "beat_seconds": 0.5263,
+      "bar_seconds": 2.1053,
+      "music_in_seconds": 24.747,
+      "music_out_seconds": 69.747,
+      "why_this_window": "Starts 4 bars before the track's main drop (33.168s) so the reel opens on plucks and drops at 0:08.4; the track's one-bar kick dropouts at 47.905s and 64.747s land at 0:23.2 and 0:40.0 in reel time, giving a free breath before the primary suite and again under the deck/logo outro.",
+      "sections": [
+        {
+          "name": "Intro \u2014 plucks",
+          "reel_in": 0.0,
+          "reel_out": 8.421,
+          "bars": 4,
+          "cut_unit": "1 bar (2.11s), last bar split to 2 half-bars",
+          "content": "Exterior facade with the red maple, push to front door, entry with light-oak herringbone, iron-spindle staircase",
+          "notes": "Address burn-in ('271 Springfield Ave, Paramus NJ 07652') masked across the whole 0-6s source region it occupies"
+        },
+        {
+          "name": "Drop \u2014 chef's kitchen",
+          "reel_in": 8.421,
+          "reel_out": 23.158,
+          "bars": 7,
+          "cut_unit": "1 beat to 2 beats (0.53-1.05s)",
+          "content": "Open-concept wide on the drop, white shaker cabinets, quartz island with bold gray veining, unlacquered brass hardware inserts",
+          "notes": "First cut lands exactly on the kick at music 33.168s"
+        },
+        {
+          "name": "Break bar \u2014 move upstairs",
+          "reel_in": 23.158,
+          "reel_out": 25.263,
+          "bars": 1,
+          "cut_unit": "hold (1 shot)",
+          "content": "Single unbroken stair/landing move",
+          "notes": "Track pulls its kick for this bar (music 47.905s) \u2014 the hold is what makes the re-entry read"
+        },
+        {
+          "name": "Bedrooms & utility",
+          "reel_in": 25.263,
+          "reel_out": 31.579,
+          "bars": 3,
+          "cut_unit": "2 beats (1.05s)",
+          "content": "Wide-plank rift-sawn oak, bright secondary bedrooms, marble-tiled guest bath, black-and-white checkered laundry",
+          "notes": "Checkered laundry cuts last \u2014 highest contrast hit of the section"
+        },
+        {
+          "name": "Primary suite \u2014 slower",
+          "reel_in": 31.579,
+          "reel_out": 37.895,
+          "bars": 3,
+          "cut_unit": "1 bar (2.11s)",
+          "content": "Freestanding soaking tub under the skylight, book-matched marble walk-in shower, dual vanity with arched gold mirrors",
+          "notes": "Pacing halves against the kitchen while the music stays up \u2014 the contrast is the point"
+        },
+        {
+          "name": "Lower level \u2014 fast sweeps",
+          "reel_in": 37.895,
+          "reel_out": 40.0,
+          "bars": 1,
+          "cut_unit": "1 beat (0.53s)",
+          "content": "Secondary kitchen, dark quartz counters, brass dome pendants, blue onyx bath",
+          "notes": "Four hits in one bar \u2014 the tightest cutting in the reel"
+        },
+        {
+          "name": "Break bar \u2014 deck",
+          "reel_in": 40.0,
+          "reel_out": 42.105,
+          "bars": 1,
+          "cut_unit": "hold (1 shot)",
+          "content": "Stabilized sweep across the elevated composite deck and backyard",
+          "notes": "Second kick dropout (music 64.747s) \u2014 the deck gets the reel's only real breath"
+        },
+        {
+          "name": "Brand lockup",
+          "reel_in": 42.105,
+          "reel_out": 45.0,
+          "bars": 2.4,
+          "cut_unit": "hold + fade",
+          "content": "Deck shot continues, fades to a semi-transparent plate, WA Construct logo resolves over it",
+          "notes": "Logo lands on the lift at music 66.852s; music fades out over the final 1.5s"
+        }
+      ]
+    },
+    "deliverable": "45s beat-synced luxury walkthrough reel",
+    "blockers": [
+      "source_footage_unavailable",
+      "logo_file_missing"
+    ],
+    "source_file": "https://drive.google.com/file/d/1REmUql7zOeVY2jLlfZ4h3FqmuZ4ij-rC/view"
+  }
+}

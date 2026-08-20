@@ -1,0 +1,84 @@
+{
+  "track": "assets/music/track.mp3",
+  "measured_bpm": 114.0,
+  "brief_assumed_bpm": 120,
+  "beat_seconds": 0.5263,
+  "bar_seconds": 2.1053,
+  "music_in_seconds": 24.747,
+  "music_out_seconds": 69.747,
+  "why_this_window": "Starts 4 bars before the track's main drop (33.168s) so the reel opens on plucks and drops at 0:08.4; the track's one-bar kick dropouts at 47.905s and 64.747s land at 0:23.2 and 0:40.0 in reel time, giving a free breath before the primary suite and again under the deck/logo outro.",
+  "sections": [
+    {
+      "name": "Intro \u2014 plucks",
+      "reel_in": 0.0,
+      "reel_out": 8.421,
+      "bars": 4,
+      "cut_unit": "1 bar (2.11s), last bar split to 2 half-bars",
+      "content": "Exterior facade with the red maple, push to front door, entry with light-oak herringbone, iron-spindle staircase",
+      "notes": "Address burn-in ('271 Springfield Ave, Paramus NJ 07652') masked across the whole 0-6s source region it occupies"
+    },
+    {
+      "name": "Drop \u2014 chef's kitchen",
+      "reel_in": 8.421,
+      "reel_out": 23.158,
+      "bars": 7,
+      "cut_unit": "1 beat to 2 beats (0.53-1.05s)",
+      "content": "Open-concept wide on the drop, white shaker cabinets, quartz island with bold gray veining, unlacquered brass hardware inserts",
+      "notes": "First cut lands exactly on the kick at music 33.168s"
+    },
+    {
+      "name": "Break bar \u2014 move upstairs",
+      "reel_in": 23.158,
+      "reel_out": 25.263,
+      "bars": 1,
+      "cut_unit": "hold (1 shot)",
+      "content": "Single unbroken stair/landing move",
+      "notes": "Track pulls its kick for this bar (music 47.905s) \u2014 the hold is what makes the re-entry read"
+    },
+    {
+      "name": "Bedrooms & utility",
+      "reel_in": 25.263,
+      "reel_out": 31.579,
+      "bars": 3,
+      "cut_unit": "2 beats (1.05s)",
+      "content": "Wide-plank rift-sawn oak, bright secondary bedrooms, marble-tiled guest bath, black-and-white checkered laundry",
+      "notes": "Checkered laundry cuts last \u2014 highest contrast hit of the section"
+    },
+    {
+      "name": "Primary suite \u2014 slower",
+      "reel_in": 31.579,
+      "reel_out": 37.895,
+      "bars": 3,
+      "cut_unit": "1 bar (2.11s)",
+      "content": "Freestanding soaking tub under the skylight, book-matched marble walk-in shower, dual vanity with arched gold mirrors",
+      "notes": "Pacing halves against the kitchen while the music stays up \u2014 the contrast is the point"
+    },
+    {
+      "name": "Lower level \u2014 fast sweeps",
+      "reel_in": 37.895,
+      "reel_out": 40.0,
+      "bars": 1,
+      "cut_unit": "1 beat (0.53s)",
+      "content": "Secondary kitchen, dark quartz counters, brass dome pendants, blue onyx bath",
+      "notes": "Four hits in one bar \u2014 the tightest cutting in the reel"
+    },
+    {
+      "name": "Break bar \u2014 deck",
+      "reel_in": 40.0,
+      "reel_out": 42.105,
+      "bars": 1,
+      "cut_unit": "hold (1 shot)",
+      "content": "Stabilized sweep across the elevated composite deck and backyard",
+      "notes": "Second kick dropout (music 64.747s) \u2014 the deck gets the reel's only real breath"
+    },
+    {
+      "name": "Brand lockup",
+      "reel_in": 42.105,
+      "reel_out": 45.0,
+      "bars": 2.4,
+      "cut_unit": "hold + fade",
+      "content": "Deck shot continues, fades to a semi-transparent plate, WA Construct logo resolves over it",
+      "notes": "Logo lands on the lift at music 66.852s; music fades out over the final 1.5s"
+    }
+  ]
+}
