@@ -26,6 +26,12 @@ visible in the shared Drive folder. Every route to actually pull the bytes is cl
 The proxy README is explicit that a 403 is an organization egress-policy denial and
 must be reported, not routed around. So I have stopped here rather than working around it.
 
+**Re-tested 08:02 after the file was re-shared — still 403 on both hosts.** This is the
+important part: the refusal happens at the network layer, on the CONNECT handshake,
+*before* Drive ever evaluates who the file is shared with. Sharing permissions are not
+the problem and changing them cannot fix it. This session is not allowed to open a
+connection to `drive.google.com` at all.
+
 **Also note:** the supplied transcript carries no timecodes. It is prose-only, so it can
 confirm *what is said and in what order* but not *when*. It is not a substitute for the audio.
 
@@ -161,11 +167,14 @@ This reverses the opening constraint of the brief — *"no titles, no lower thir
 no motion graphics… trim and split, nothing else."* Your later instruction supersedes it and
 I will build the outro, but three things are unresolved:
 
-1. **Which parts get it?** All four, or Part 4 only? (Default assumption: all four.)
+1. ~~Which parts get it?~~ **Answered: every clip.**
 2. **The logo asset.** The logo came through as an image in chat, not as a file. I need
    the source PNG/SVG on disk to composite at full resolution.
 3. **A URL is not clickable in an MP4.** It can only be rendered as text on screen.
    Confirm that is what you want.
+
+**RESOLVED:** outro goes on **every clip** — all four tutorial parts plus both hands-free
+versions (six files total). Still outstanding: the logo as a file on disk, and item 3 above.
 
 ---
 
@@ -234,7 +243,7 @@ intended (I have assumed yes, since you called it "separate from the four tutori
 2. **Filenames** — your Step 6 convention doesn't cover this. Proposing:
    `homeestimator-hands-free-mode-short.mp4` / `-extended.mp4`. Say if you want them
    numbered into the `-05-` series instead.
-3. **Does the outro card go on these too**, or only the tutorial parts?
+3. ~~Does the outro card go on these too?~~ **Answered: yes, every clip gets the outro.**
 
 ---
 
@@ -244,7 +253,8 @@ intended (I have assumed yes, since you called it "separate from the four tutori
 2. **Rulings on A1 and A2** (spoken dollar figures).
 3. **Confirmation on Part 1's short runtime** — option (a), (b) or (c) from finding 2.
 4. **Part 4 end point** — 29:52 (end of file) rather than 29:56.
-5. **Outro scope** — the three questions above, plus the logo file.
+5. **The logo as a file on disk** — needed to composite the outro at full resolution.
+   The chat image is not usable as a source asset.
 6. **Step 9 rulings** — the truncated content list, filenames, and whether the
    hands-free clip carries the outro.
 
