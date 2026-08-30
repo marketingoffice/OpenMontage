@@ -46,12 +46,44 @@ boundary to the frame in one pass.
 present); OpenMontage `video_trimmer`, `silence_cutter`, `transcriber`, `frame_sampler`
 and `audio_energy` confirmed present.
 
-### To unblock — any one of these
+### To unblock — routes that actually work
 
-1. **Attach the MP4 to the chat directly.** The transcript arrived this way and landed
-   on disk as a real file, bypassing the proxy entirely. Best option if the size is accepted.
-2. **Have the egress policy allow `drive.google.com` and `drive.usercontent.google.com`.**
-3. **Put the file on a host this session can already reach.**
+The chat upload cap is 30 MB and the master is 97 MB, so a straight attach is out.
+Ranked by how fast they get us moving:
+
+**1. Send audio only (~14 MB) — recommended, do this first.**
+The entire Step 1 verification job is audio-driven: boundary placement, silence between
+sentences, dead air over 1.2s, filler and false starts. None of it needs the picture.
+A mono 64 kbps extract of 29:52 is about 14 MB and fits the cap comfortably:
+
+```
+ffmpeg -i "Home Estimator Demo Video.mp4" -vn -ac 1 -c:a aac -b:a 64k he-audio.m4a
+```
+
+That gets you a **fully verified cut list** — every boundary confirmed, every drift over
+3s reported — which is what you're waiting to approve. It does not cover the on-screen
+redaction scan or rendering; those still need the picture.
+
+**2. Allowlist `drive.google.com` and `drive.usercontent.google.com`** on this
+environment's egress policy. The durable fix — needs whoever administers the environment.
+
+**3. Byte-split the master into four chunks under 30 MB and attach them.**
+Lossless and exact, no re-encode, no admin needed:
+
+```
+split -b 28m "Home Estimator Demo Video.mp4" hedemo.part.
+```
+
+I reassemble with `cat hedemo.part.* > src.mp4` and verify the checksum.
+
+**4. GitHub release asset — DO NOT USE.**
+`marketingoffice/OpenMontage` is a **public** repository (confirmed via the API:
+`visibility: public`). Uploading the unredacted master there would publish, to anyone,
+the exact material this edit exists to remove — the Berkeley Heights and Rockaway project
+names, "Hussain", "Jason", the backend profit-margin discussion, the full project total,
+and whatever client name, address or WA Construct branding is on screen. A private repo
+would be fine; this one is not. Flagging because the master must not land in this repo at
+all — `projects/` is gitignored for that reason, and the source copy I staged is excluded.
 
 ---
 
@@ -249,7 +281,8 @@ intended (I have assumed yes, since you called it "separate from the four tutori
 
 ## What I need to proceed
 
-1. **The source MP4** — the blocker. Nothing in Steps 1, 3 (visual scan), 6 or 7 can happen without it.
+1. **The source media** — the blocker. Audio alone (route 1 above) unblocks all boundary
+   verification; the picture is still required for the visual redaction scan and rendering.
 2. **Rulings on A1 and A2** (spoken dollar figures).
 3. **Confirmation on Part 1's short runtime** — option (a), (b) or (c) from finding 2.
 4. **Part 4 end point** — 29:52 (end of file) rather than 29:56.
