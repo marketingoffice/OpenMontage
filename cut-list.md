@@ -26,7 +26,13 @@ visible in the shared Drive folder. Every route to actually pull the bytes is cl
 The proxy README is explicit that a 403 is an organization egress-policy denial and
 must be reported, not routed around. So I have stopped here rather than working around it.
 
-**Re-tested 08:02 after the file was re-shared — still 403 on both hosts.** This is the
+**Re-tested three times, including the direct file-view link. All fail identically.**
+The block is not specific to Drive: `docs.google.com`, `googleusercontent.com`,
+`lh3.googleusercontent.com`, `drive-thirdparty.googleusercontent.com` and even
+`www.google.com` all fail to connect. **The entire Google domain family is denied by this
+environment's egress policy.** The one exception is `www.googleapis.com`, which responds
+but requires an OAuth token this session cannot obtain. **No Google Drive URL, in any
+form, can work from here.** This is the
 important part: the refusal happens at the network layer, on the CONNECT handshake,
 *before* Drive ever evaluates who the file is shared with. Sharing permissions are not
 the problem and changing them cannot fix it. This session is not allowed to open a
@@ -64,8 +70,9 @@ That gets you a **fully verified cut list** — every boundary confirmed, every 
 3s reported — which is what you're waiting to approve. It does not cover the on-screen
 redaction scan or rendering; those still need the picture.
 
-**2. Allowlist `drive.google.com` and `drive.usercontent.google.com`** on this
-environment's egress policy. The durable fix — needs whoever administers the environment.
+**2. Allowlist the Google hosts** (`drive.google.com`, `drive.usercontent.google.com`)
+on this environment's egress policy. The durable fix — needs whoever administers the
+environment. Note the whole Google domain family is currently denied, not just Drive.
 
 **3. Byte-split the master into four chunks under 30 MB and attach them.**
 Lossless and exact, no re-encode, no admin needed:
