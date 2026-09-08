@@ -18,8 +18,12 @@ export const FPS = 30;
 export const WIDTH = 1920;
 export const HEIGHT = 1080;
 
-/** Frames of cross-dissolve between consecutive photo beats. */
-export const DISSOLVE = 10;
+/**
+ * Frames of cross-dissolve between consecutive photo beats. At 14 frames
+ * (~0.47s) the blend is long enough to read as a dissolve rather than a soft
+ * cut, which suits the slower cadence the strings ask for.
+ */
+export const DISSOLVE = 14;
 
 export type KenBurns = {
   /** scale at the first frame of the beat */
@@ -44,79 +48,96 @@ export type Beat = {
 };
 
 /**
- * Eight photo beats. Room mix is deliberate: 3 primary bath, 2 powder room,
- * 1 bedroom, 2 living room. v2 ran 5 of 7 beats in the primary bath, which read
- * as a bathroom remodel rather than a whole-home renovation.
+ * Eight photo beats, cut to the music rather than to a stopwatch.
  *
- * No two consecutive beats move the same way — the eye needs the change.
+ * The cue runs 152 BPM (felt 76), so a bar is 1.579s. Every beat is a whole
+ * number of bars and every cut lands within ~15ms of a downbeat; the opening
+ * beat carries an extra 16 frames so the track keeps its anacrusis instead of
+ * being trimmed to force the grid onto zero. Absolute cut positions are rounded
+ * to frames independently, so rounding never accumulates across the reel.
+ *
+ * Holds run 3.2s (2 bars) with the two hero frames — the tub reveal and the
+ * staged bedroom — given 4.7s (3 bars). Room mix is 2 primary bath plus 2
+ * material macros, 1 powder room, 2 bedroom, 1 living room. The macros read as
+ * texture rather than "another bathroom", and they fill the beat freed up when
+ * the living-room sectional came out.
  */
 export const BEATS: Beat[] = [
   {
     id: 'b1',
     src: 's1_bath_vanity.jpg',
     headline: 'BRUNSWICK RENOVATION',
-    durationInFrames: 81,
-    move: { fromScale: 1.02, toScale: 1.1, fromX: 0, toX: -1.2 },
+    durationInFrames: 111,
+    move: { fromScale: 1.02, toScale: 1.09, fromX: 0, toX: -1.0 },
   },
   {
     id: 'b2',
     src: 's2_bath_detail.jpg',
     headline: 'DESIGNED AROUND DETAIL',
-    durationInFrames: 69,
-    move: { fromScale: 1.12, toScale: 1.03 },
+    durationInFrames: 95,
+    move: { fromScale: 1.13, toScale: 1.05 },
   },
   {
     id: 'b3',
-    src: 's4_powder_wide.jpg',
-    headline: 'EVERY ROOM CONSIDERED',
-    durationInFrames: 72,
-    move: { fromScale: 1.08, toScale: 1.08, fromX: 1.0, toX: -1.0 },
+    // Tight on the quartzite: no fixtures, no room cues, just the veining.
+    // Panned rather than pushed, so the eye travels the slab.
+    src: 's9_marble.jpg',
+    headline: 'MATERIALS WITH INTENTION',
+    durationInFrames: 95,
+    move: { fromScale: 1.06, toScale: 1.06, fromX: 0.9, toX: -0.9 },
   },
   {
     id: 'b4',
+    // Hero reveal — 3 bars, landing on a downbeat.
     src: 's3_bath_tub.jpg',
     headline: 'PRECISION IN THE FINISH',
-    durationInFrames: 78,
-    move: { fromScale: 1.03, toScale: 1.11, fromY: 0, toY: -1.0 },
+    durationInFrames: 142,
+    move: { fromScale: 1.03, toScale: 1.1, fromY: 0, toY: -0.8 },
   },
   {
     id: 'b5',
-    src: 's5_powder_vanity.jpg',
-    headline: 'MATERIALS WITH INTENTION',
-    durationInFrames: 69,
-    move: { fromScale: 1.04, toScale: 1.12 },
+    src: 's4_powder_wide.jpg',
+    headline: 'EVERY ROOM CONSIDERED',
+    durationInFrames: 95,
+    move: { fromScale: 1.08, toScale: 1.08, fromX: 0.9, toX: -0.9 },
   },
   {
     id: 'b6',
+    // Hero — the only fully styled room in the set. 3 bars.
     src: 's6_bedroom.jpg',
     headline: 'A HOME TAKING SHAPE',
-    durationInFrames: 87,
-    move: { fromScale: 1.11, toScale: 1.03, fromX: -1.0, toX: 0.6 },
+    durationInFrames: 142,
+    move: { fromScale: 1.1, toScale: 1.03, fromX: -0.8, toX: 0.5 },
   },
   {
     id: 'b7',
     src: 's7_lr_doors.jpg',
     headline: 'LIGHT THROUGH THE HOUSE',
-    durationInFrames: 75,
-    move: { fromScale: 1.07, toScale: 1.07, fromX: -1.2, toX: 1.0 },
+    durationInFrames: 95,
+    move: { fromScale: 1.06, toScale: 1.06, fromX: -1.0, toX: 0.9 },
   },
   {
     id: 'b8',
-    src: 's8_lr_media.jpg',
+    // The living-room frames all carry the black sectional, which the client
+    // cut. This closes on the pale vanity room instead, graded a touch softer
+    // so bare walls read warm rather than stark, and pushed in deliberately so
+    // the empty room still has forward movement.
+    src: 's8_vanity_room.jpg',
     headline: 'CRAFTED FOR DAILY LIVING',
-    durationInFrames: 84,
+    durationInFrames: 94,
     move: { fromScale: 1.03, toScale: 1.1 },
   },
 ];
 
-export const OUTRO_FRAMES = 159;
+/** 4 bars, so the end card gets a full musical phrase to land in. */
+export const OUTRO_FRAMES = 189;
 
 /**
  * The outro grows out of the last beat rather than cutting to a card: it keeps
  * s8 on screen and keeps pushing in from where b8 left off, so the scrim reads
  * as the room dimming rather than as a slide change.
  */
-export const OUTRO_MOVE: KenBurns = { fromScale: 1.1, toScale: 1.16 };
+export const OUTRO_MOVE: KenBurns = { fromScale: 1.1, toScale: 1.15 };
 
 export const TOTAL_FRAMES =
   BEATS.reduce((n, b) => n + b.durationInFrames, 0) + OUTRO_FRAMES;
@@ -126,7 +147,13 @@ export const BRAND = {
   project: 'BRUNSWICK RENOVATION',
   locale: 'New Jersey',
   kicker: 'WA CONSTRUCT',
-  credentials: ['23+ Years', '2026 SAM Awards', '4× Best of Houzz'],
+  /** Design-build integration is a stated brand pillar — not a claim to verify. */
+  statement: ['Design–build,', 'start to finish.'],
+  credentials: [
+    '23+ years building in New Jersey',
+    '2026 SAM Awards',
+    '4× Best of Houzz',
+  ],
   cta: 'Book a Consultation',
   url: 'WACONSTRUCT.COM',
   phone: '201-485-8887',

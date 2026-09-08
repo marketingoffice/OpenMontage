@@ -1,158 +1,212 @@
 import React from 'react';
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from 'remotion';
-import { BEATS, BRAND, GOLD, OUTRO_MOVE } from './theme';
+import { BEATS, BRAND, GOLD, OUTRO_MOVE, WIDTH } from './theme';
 import { SANS } from './fonts';
 import { KenBurnsPhoto } from './KenBurnsPhoto';
 
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
+const PANEL = 0.44;
+
 /**
- * The replacement for v2's white contact slate: a dark brand card.
+ * Split lockup: the last room holds the left of the frame, a brand panel takes
+ * the right.
  *
- * v2 cut from a warm, dark montage to a flat white field — a hard flash that
- * reads as "the video is over". This lands on near-black instead, which is
- * tonally continuous with the graded photography, and it carries the verified
- * credentials v2 had nowhere.
+ * Third direction for this end card. v2's white slate flashed; a full dark card
+ * still meant the work disappeared at the CTA. Here the room never leaves — the
+ * frame simply narrows to 56% as the panel slides in from the right, so the
+ * photography and the ask share the screen instead of taking turns.
  *
- * The last room does not cut away; it keeps pushing in and dissolves down into
- * the dark field over the first ~20 frames, so the card resolves out of the
- * montage rather than interrupting it. The held frame is a clean card.
+ * The left plate is whatever the final beat was, continuing its push, so the
+ * outro opens out of the montage rather than replacing it.
  */
 export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
   const last = BEATS[BEATS.length - 1];
 
-  const rise = (delay: number, span = 22) =>
+  const rise = (delay: number, span = 20) =>
     ease(interpolate(frame, [delay, delay + span], [0, 1], {
       extrapolateLeft: 'clamp',
       extrapolateRight: 'clamp',
     }));
 
-  // The room recedes rather than being cut away.
-  const photo = interpolate(frame, [0, 22], [1, 0], {
+  // The frame narrows; the photo inside keeps its cover crop, so the room is
+  // re-framed rather than squashed.
+  const split = ease(interpolate(frame, [0, 30], [0, 1], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
-  });
+  }));
+  const photoWidth = WIDTH * (1 - PANEL * split);
 
-  const glow = interpolate(frame, [4, 34], [0, 1], {
-    extrapolateLeft: 'clamp',
-    extrapolateRight: 'clamp',
-  });
-
-  const logo = rise(8);
-  const rule = rise(22, 18);
-  const head = rise(28);
-  const sub = rise(36);
-  const creds = rise(44);
-  const cta = rise(52);
-  const contact = rise(58);
+  const panel = rise(4, 28);
+  const logo = rise(20);
+  const rule = rise(32, 16);
+  const head = rise(38);
+  const creds = rise(50);
+  const cta = rise(64);
+  const contact = rise(70);
+  const caption = rise(44);
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#0E0E0F' }}>
-      <AbsoluteFill style={{ opacity: photo }}>
-        <KenBurnsPhoto
-          src={last.src}
-          move={OUTRO_MOVE}
-          localFrame={frame}
-          durationInFrames={durationInFrames}
-        />
-        <AbsoluteFill style={{ backgroundColor: 'rgba(8,8,9,0.55)' }} />
-      </AbsoluteFill>
-
-      {/* A single warm pool behind the lockup, so the card is not a flat slab. */}
-      <AbsoluteFill
+      <div
         style={{
-          opacity: glow,
-          background:
-            'radial-gradient(ellipse 1150px 720px at 50% 46%, rgba(201,162,89,0.11), rgba(201,162,89,0) 70%)',
-        }}
-      />
-
-      <AbsoluteFill
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          fontFamily: SANS,
+          position: 'absolute',
+          left: 0,
+          top: 0,
+          bottom: 0,
+          width: photoWidth,
+          overflow: 'hidden',
         }}
       >
-        <Img
-          src={staticFile('logo.png')}
+        <div style={{ position: 'absolute', left: 0, top: 0, width: WIDTH, height: '100%' }}>
+          <KenBurnsPhoto
+            src={last.src}
+            move={OUTRO_MOVE}
+            localFrame={frame}
+            durationInFrames={durationInFrames}
+          />
+        </div>
+
+        {/* Feathers the photo into the panel so the seam is not a hard edge. */}
+        <AbsoluteFill
           style={{
-            width: 560,
-            marginBottom: 78,
-            opacity: logo,
-            transform: `translateY(${(1 - logo) * 18}px)`,
+            background:
+              'linear-gradient(90deg, rgba(14,14,15,0) 52%, rgba(14,14,15,0.55) 82%, rgba(14,14,15,0.96) 100%)',
+            opacity: split,
+          }}
+        />
+        <AbsoluteFill
+          style={{
+            background:
+              'linear-gradient(180deg, rgba(8,8,9,0.30) 0%, rgba(8,8,9,0) 34%, rgba(8,8,9,0.62) 100%)',
           }}
         />
 
         <div
           style={{
-            width: 120,
+            position: 'absolute',
+            left: 76,
+            bottom: 74,
+            fontFamily: SANS,
+            opacity: caption,
+            transform: `translateY(${(1 - caption) * 14}px)`,
+          }}
+        >
+          <div
+            style={{
+              fontWeight: 700,
+              fontSize: 27,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: '#FFFFFF',
+              textShadow: '0 2px 16px rgba(0,0,0,0.7)',
+            }}
+          >
+            {BRAND.project}
+          </div>
+          <div style={{ width: 70, height: 1, backgroundColor: GOLD, margin: '20px 0 16px' }} />
+          <div
+            style={{
+              fontWeight: 300,
+              fontSize: 21,
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.8)',
+              textShadow: '0 2px 12px rgba(0,0,0,0.7)',
+            }}
+          >
+            {BRAND.locale}
+          </div>
+        </div>
+      </div>
+
+      <div
+        style={{
+          position: 'absolute',
+          right: 0,
+          top: 0,
+          bottom: 0,
+          width: WIDTH * PANEL,
+          backgroundColor: '#0E0E0F',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          padding: '0 96px 0 78px',
+          fontFamily: SANS,
+          transform: `translateX(${(1 - panel) * 100}%)`,
+        }}
+      >
+        <Img
+          src={staticFile('logo.png')}
+          style={{
+            width: 430,
+            marginBottom: 64,
+            opacity: logo,
+            transform: `translateY(${(1 - logo) * 14}px)`,
+          }}
+        />
+
+        <div
+          style={{
+            width: 96,
             height: 1,
             backgroundColor: GOLD,
-            marginBottom: 46,
+            marginBottom: 40,
             transform: `scaleX(${rule})`,
+            transformOrigin: 'left center',
           }}
         />
 
         <div
           style={{
             fontWeight: 900,
-            fontSize: 74,
-            letterSpacing: '0.05em',
+            fontSize: 52,
+            letterSpacing: '0.045em',
             color: '#FFFFFF',
-            lineHeight: 1,
+            lineHeight: 1.14,
             opacity: head,
-            transform: `translateY(${(1 - head) * 20}px)`,
+            transform: `translateY(${(1 - head) * 16}px)`,
           }}
         >
-          {BRAND.project}
-        </div>
-
-        <div
-          style={{
-            marginTop: 24,
-            fontWeight: 400,
-            fontSize: 24,
-            letterSpacing: '0.44em',
-            textTransform: 'uppercase',
-            color: GOLD,
-            opacity: sub,
-            transform: `translateY(${(1 - sub) * 12}px)`,
-          }}
-        >
-          {BRAND.locale}
-        </div>
-
-        <div
-          style={{
-            marginTop: 70,
-            fontWeight: 400,
-            fontSize: 21,
-            letterSpacing: '0.2em',
-            textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.55)',
-            opacity: creds,
-            transform: `translateY(${(1 - creds) * 10}px)`,
-          }}
-        >
-          {BRAND.credentials.map((c, i) => (
-            <React.Fragment key={c}>
-              {i > 0 ? <span style={{ color: GOLD, margin: '0 18px' }}>•</span> : null}
-              {c}
-            </React.Fragment>
+          {BRAND.statement.map((line) => (
+            <div key={line}>{line}</div>
           ))}
         </div>
 
         <div
           style={{
-            marginTop: 70,
+            marginTop: 44,
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 13,
+            opacity: creds,
+            transform: `translateY(${(1 - creds) * 10}px)`,
+          }}
+        >
+          {BRAND.credentials.map((c) => (
+            <div
+              key={c}
+              style={{
+                fontWeight: 400,
+                fontSize: 20,
+                letterSpacing: '0.17em',
+                textTransform: 'uppercase',
+                color: 'rgba(255,255,255,0.6)',
+              }}
+            >
+              <span style={{ color: GOLD, fontWeight: 700, marginRight: 14 }}>—</span>
+              {c}
+            </div>
+          ))}
+        </div>
+
+        <div
+          style={{
+            marginTop: 62,
             fontWeight: 700,
-            fontSize: 27,
-            letterSpacing: '0.32em',
+            fontSize: 25,
+            letterSpacing: '0.28em',
             textTransform: 'uppercase',
             color: '#FFFFFF',
             opacity: cta,
@@ -164,20 +218,20 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
 
         <div
           style={{
-            marginTop: 22,
+            marginTop: 18,
             fontWeight: 400,
-            fontSize: 26,
-            letterSpacing: '0.14em',
+            fontSize: 24,
+            letterSpacing: '0.11em',
             color: GOLD,
+            lineHeight: 1.5,
             opacity: contact,
             transform: `translateY(${(1 - contact) * 10}px)`,
           }}
         >
-          {BRAND.url}
-          <span style={{ margin: '0 16px', opacity: 0.6 }}>·</span>
-          {BRAND.phone}
+          <div>{BRAND.url}</div>
+          <div>{BRAND.phone}</div>
         </div>
-      </AbsoluteFill>
+      </div>
     </AbsoluteFill>
   );
 };
