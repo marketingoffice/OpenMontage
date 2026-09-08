@@ -231,6 +231,85 @@
       "selected": "clean-professional",
       "reason": "Preserves series continuity with v2 while leaving room for the new outro.",
       "confidence": 0.85
+    },
+    {
+      "decision_id": "d-008",
+      "stage": "proposal",
+      "category": "visual_accuracy_check",
+      "subject": "Replacement frame for the living-room beat containing a child's tricycle",
+      "options_considered": [
+        {
+          "option_id": "lr_media_wall",
+          "label": "finished-living-room-media-wall-view.png",
+          "score": 0.93,
+          "reason": "Shipped as beat 8. Same room and grade as the rejected frame, opposite side, none of the objected-to objects."
+        }
+      ],
+      "selected": "lr_media_wall",
+      "reason": "Confirmed in the delivered render; superseded nothing.",
+      "confidence": 0.95
+    },
+    {
+      "decision_id": "d-009",
+      "stage": "proposal",
+      "category": "playbook_override",
+      "subject": "Outro direction",
+      "options_considered": [
+        {
+          "option_id": "outro_a",
+          "label": "A \u2014 dark brand card",
+          "score": 0.9,
+          "reason": "Client's pick. Near-black field, tonally continuous with the graded montage, and reusable as a series end card across future project videos."
+        },
+        {
+          "option_id": "outro_b",
+          "label": "B \u2014 photo + scrim, pinned contact bar",
+          "score": 0.85,
+          "reason": "The agent's recommendation, shipped in the first render.",
+          "rejected_because": "Client chose A after seeing both in motion."
+        },
+        {
+          "option_id": "outro_c",
+          "label": "C \u2014 split lockup",
+          "score": 0.7,
+          "reason": "Most editorial of the three.",
+          "rejected_because": "Not selected."
+        }
+      ],
+      "selected": "outro_a",
+      "reason": "Client decision after reviewing all three as 1920x1080 mockups and A/B in a finished render. Implemented so the last room dissolves down into the card over ~22 frames rather than cutting, which keeps A's clean held frame while avoiding the hard slate change that made v2's white card jarring.",
+      "confidence": 1.0
+    },
+    {
+      "decision_id": "d-010",
+      "stage": "compose",
+      "category": "capability_extension",
+      "subject": "Chromium and font resolution for Remotion on a restricted-egress host",
+      "options_considered": [
+        {
+          "option_id": "local_chromium_system_font",
+          "label": "Local Chromium via remotion.config.ts + Lato via fontconfig",
+          "score": 0.95,
+          "reason": "Remotion's headless-shell download from remotion.media is blocked by the network allowlist, and webfont loading fails silently behind the TLS-inspecting proxy while FontFace+delayRender hangs the renderer outright. Pointing Remotion at the preinstalled Chromium and installing Lato as a system font removes the network from the render path entirely."
+        },
+        {
+          "option_id": "embed_woff2",
+          "label": "Embed woff2 as data URIs behind delayRender",
+          "score": 0.3,
+          "reason": "No network fetch.",
+          "rejected_because": "Still timed out \u2014 Remotion freezes timers during rendering, so the setTimeout fallback never fires and the render died at frame 167 on a newly spawned tab."
+        },
+        {
+          "option_id": "disable_tls",
+          "label": "Disable TLS verification for the proxy",
+          "score": 0.0,
+          "reason": "Would make the webfont load.",
+          "rejected_because": "Never acceptable; also unnecessary once the font is local."
+        }
+      ],
+      "selected": "local_chromium_system_font",
+      "reason": "Both fixes are committed and generalised (remotion.config.ts falls back to normal behaviour when no local browser exists; scripts/install-lato.sh is re-runnable), so the next agent on a restricted host does not repeat the dive.",
+      "confidence": 0.95
     }
   ]
 }

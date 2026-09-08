@@ -7,13 +7,16 @@ import { KenBurnsPhoto } from './KenBurnsPhoto';
 const ease = (t: number) => 1 - Math.pow(1 - t, 3);
 
 /**
- * The replacement for v2's white contact slate.
+ * The replacement for v2's white contact slate: a dark brand card.
  *
- * v2 cut from a warm, dark montage to a flat white card — a hard flash that
- * reads as "the video is over" and drops retention. Here the last room stays on
- * screen and keeps moving while a scrim closes over it, so the CTA arrives on
- * top of the work rather than instead of it. Contact details sit in a pinned bar
- * so they stay put while the centre stack settles.
+ * v2 cut from a warm, dark montage to a flat white field — a hard flash that
+ * reads as "the video is over". This lands on near-black instead, which is
+ * tonally continuous with the graded photography, and it carries the verified
+ * credentials v2 had nowhere.
+ *
+ * The last room does not cut away; it keeps pushing in and dissolves down into
+ * the dark field over the first ~20 frames, so the card resolves out of the
+ * montage rather than interrupting it. The held frame is a clean card.
  */
 export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames }) => {
   const frame = useCurrentFrame();
@@ -25,42 +28,43 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
       extrapolateRight: 'clamp',
     }));
 
-  const scrim = interpolate(frame, [0, 26], [0, 1], {
+  // The room recedes rather than being cut away.
+  const photo = interpolate(frame, [0, 22], [1, 0], {
     extrapolateLeft: 'clamp',
     extrapolateRight: 'clamp',
   });
 
-  const logo = rise(6);
-  const rule = rise(20, 18);
-  const head = rise(26);
-  const sub = rise(34);
-  const creds = rise(42);
-  const bar = rise(30, 26);
+  const glow = interpolate(frame, [4, 34], [0, 1], {
+    extrapolateLeft: 'clamp',
+    extrapolateRight: 'clamp',
+  });
+
+  const logo = rise(8);
+  const rule = rise(22, 18);
+  const head = rise(28);
+  const sub = rise(36);
+  const creds = rise(44);
+  const cta = rise(52);
+  const contact = rise(58);
 
   return (
     <AbsoluteFill style={{ backgroundColor: '#0E0E0F' }}>
-      <KenBurnsPhoto
-        src={last.src}
-        move={OUTRO_MOVE}
-        localFrame={frame}
-        durationInFrames={durationInFrames}
-      />
+      <AbsoluteFill style={{ opacity: photo }}>
+        <KenBurnsPhoto
+          src={last.src}
+          move={OUTRO_MOVE}
+          localFrame={frame}
+          durationInFrames={durationInFrames}
+        />
+        <AbsoluteFill style={{ backgroundColor: 'rgba(8,8,9,0.55)' }} />
+      </AbsoluteFill>
 
-      {/* The room dims rather than disappears. Kept deliberately light: the
-          stills are already graded with a vignette, so a heavy scrim here
-          compounds with it and the room goes to mud behind the type. */}
+      {/* A single warm pool behind the lockup, so the card is not a flat slab. */}
       <AbsoluteFill
         style={{
-          opacity: scrim,
+          opacity: glow,
           background:
-            'linear-gradient(180deg, rgba(8,8,9,0.44) 0%, rgba(8,8,9,0.52) 40%, rgba(8,8,9,0.80) 100%)',
-        }}
-      />
-      <AbsoluteFill
-        style={{
-          opacity: scrim,
-          background:
-            'radial-gradient(ellipse 1250px 780px at 50% 50%, rgba(0,0,0,0) 34%, rgba(0,0,0,0.34) 100%)',
+            'radial-gradient(ellipse 1150px 720px at 50% 46%, rgba(201,162,89,0.11), rgba(201,162,89,0) 70%)',
         }}
       />
 
@@ -70,7 +74,6 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          paddingBottom: 118,
           textAlign: 'center',
           fontFamily: SANS,
         }}
@@ -78,20 +81,19 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
         <Img
           src={staticFile('logo.png')}
           style={{
-            width: 520,
-            marginBottom: 62,
+            width: 560,
+            marginBottom: 78,
             opacity: logo,
             transform: `translateY(${(1 - logo) * 18}px)`,
-            filter: 'drop-shadow(0 2px 18px rgba(0,0,0,0.6))',
           }}
         />
 
         <div
           style={{
-            width: 110,
+            width: 120,
             height: 1,
             backgroundColor: GOLD,
-            marginBottom: 40,
+            marginBottom: 46,
             transform: `scaleX(${rule})`,
           }}
         />
@@ -99,11 +101,10 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
         <div
           style={{
             fontWeight: 900,
-            fontSize: 70,
+            fontSize: 74,
             letterSpacing: '0.05em',
             color: '#FFFFFF',
             lineHeight: 1,
-            textShadow: '0 2px 26px rgba(0,0,0,0.55)',
             opacity: head,
             transform: `translateY(${(1 - head) * 20}px)`,
           }}
@@ -113,9 +114,9 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
 
         <div
           style={{
-            marginTop: 22,
+            marginTop: 24,
             fontWeight: 400,
-            fontSize: 23,
+            fontSize: 24,
             letterSpacing: '0.44em',
             textTransform: 'uppercase',
             color: GOLD,
@@ -128,12 +129,12 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
 
         <div
           style={{
-            marginTop: 60,
+            marginTop: 70,
             fontWeight: 400,
-            fontSize: 20,
+            fontSize: 21,
             letterSpacing: '0.2em',
             textTransform: 'uppercase',
-            color: 'rgba(255,255,255,0.62)',
+            color: 'rgba(255,255,255,0.55)',
             opacity: creds,
             transform: `translateY(${(1 - creds) * 10}px)`,
           }}
@@ -145,43 +146,38 @@ export const Outro: React.FC<{ durationInFrames: number }> = ({ durationInFrames
             </React.Fragment>
           ))}
         </div>
-      </AbsoluteFill>
 
-      <div
-        style={{
-          position: 'absolute',
-          left: 0,
-          right: 0,
-          bottom: 0,
-          height: 118,
-          backgroundColor: 'rgba(9,9,10,0.93)',
-          borderTop: `1px solid ${GOLD}`,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: 40,
-          fontFamily: SANS,
-          transform: `translateY(${(1 - bar) * 118}px)`,
-        }}
-      >
         <div
           style={{
+            marginTop: 70,
             fontWeight: 700,
-            fontSize: 26,
-            letterSpacing: '0.3em',
+            fontSize: 27,
+            letterSpacing: '0.32em',
             textTransform: 'uppercase',
             color: '#FFFFFF',
+            opacity: cta,
+            transform: `translateY(${(1 - cta) * 10}px)`,
           }}
         >
           {BRAND.cta}
         </div>
-        <div style={{ width: 5, height: 5, borderRadius: '50%', backgroundColor: GOLD }} />
-        <div style={{ fontWeight: 400, fontSize: 26, letterSpacing: '0.14em', color: GOLD }}>
+
+        <div
+          style={{
+            marginTop: 22,
+            fontWeight: 400,
+            fontSize: 26,
+            letterSpacing: '0.14em',
+            color: GOLD,
+            opacity: contact,
+            transform: `translateY(${(1 - contact) * 10}px)`,
+          }}
+        >
           {BRAND.url}
-          <span style={{ margin: '0 14px', opacity: 0.6 }}>·</span>
+          <span style={{ margin: '0 16px', opacity: 0.6 }}>·</span>
           {BRAND.phone}
         </div>
-      </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

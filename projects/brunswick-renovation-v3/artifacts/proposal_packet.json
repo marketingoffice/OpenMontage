@@ -218,7 +218,9 @@
     ]
   },
   "approval": {
-    "status": "pending"
+    "status": "approved_with_changes",
+    "approved_budget_usd": 0.0,
+    "user_notes": "Client asked twice for the deliverable without answering the gate questions, then confirmed after delivery: location wording stays 'BRUNSWICK' (not East Brunswick), and outro direction A (dark brand card) replaces the recommended B (photo + scrim). Concept c1, render_runtime remotion, atelier composition mode and the reused v2 music bed all stand as proposed. First render shipped with outro B; re-rendered with A on confirmation."
   },
   "metadata": {
     "run_type": "revision",
