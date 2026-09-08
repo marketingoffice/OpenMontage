@@ -1,5 +1,5 @@
 /**
- * Brunswick Renovation v3 — art direction.
+ * East Brunswick Remodel — art direction.
  *
  * Palette sampled directly from the approved v2 render so v3 reads as the same
  * series: the gold is the exact hairline-rule pixel (201,162,89), the ink is the
@@ -66,7 +66,7 @@ export const BEATS: Beat[] = [
   {
     id: 'b1',
     src: 's1_bath_vanity.jpg',
-    headline: 'BRUNSWICK RENOVATION',
+    headline: 'EAST BRUNSWICK REMODEL',
     durationInFrames: 111,
     move: { fromScale: 1.02, toScale: 1.09, fromX: 0, toX: -1.0 },
   },
@@ -144,7 +144,7 @@ export const TOTAL_FRAMES =
 
 /** Verified brand facts. Nothing here is approximated — see brand-guard. */
 export const BRAND = {
-  project: 'BRUNSWICK RENOVATION',
+  project: 'EAST BRUNSWICK REMODEL',
   locale: 'New Jersey',
   kicker: 'WA CONSTRUCT',
   /** Design-build integration is a stated brand pillar — not a claim to verify. */
