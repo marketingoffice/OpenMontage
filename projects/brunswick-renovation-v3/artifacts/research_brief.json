@@ -1,0 +1,187 @@
+{
+  "version": "1.0",
+  "topic": "Brunswick whole-home renovation \u2014 WA Construct YouTube montage (v3 revision)",
+  "research_date": "2026-09-08",
+  "research_summary": "This is a REVISION run, not a fresh concept exploration. An approved v2 render (22.17s, 1920x1080, 30fps, music-only) already exists and was supplied as the reference. Research was therefore conducted as a source-media review \u2014 a frame-by-frame teardown of v2 plus a full audit of the 25 graded stills in the client's Google Drive 'Edited' folder \u2014 rather than as web landscape research. DEVIATION NOTED: the cinematic manifest's research success_criteria asks for >=8 web searches; that criterion is not meaningful for a revision of an approved piece with a fixed, client-supplied asset pool, so it was not met. Findings below are grounded in the actual media.",
+  "landscape": {
+    "existing_content": [
+      {
+        "title": "Brunswick_WA_Construct_YouTube_v2.mp4",
+        "source": "client-supplied render",
+        "url": "local://projects/brunswick-renovation-v3/assets/reference/brunswick_v2_reference.mp4",
+        "angle": "Still-led Ken Burns montage with a gold-hairline lower third, closing on a white contact slate",
+        "what_it_covers": "22.17s at 1920x1080/30fps over a music-only bed (-13.5 dB mean, -0.4 dB peak). Seven photo beats at roughly 2.5s each, then a ~4s end card. Beats: BRUNSWICK RENOVATION (bath vanity) 0.0-2.2 / A HOME TAKING SHAPE (bath sink) 2.2-4.8 / DESIGNED AROUND DETAIL (vanity light) 4.8-7.3 / PRECISION IN THE FINISH (tub + window) 7.3-10.2 / MATERIALS WITH INTENTION (teal marble shower) 10.2-12.8 / CRAFTED FOR DAILY LIVING (empty coral room) 12.8-15.3 / THE TRANSFORMATION CONTINUES (lived-in living room) 15.3-18.2.",
+        "what_it_misses": "Five of seven photo beats are the primary bathroom, so a whole-home renovation reads as a bathroom remodel. The closing living-room frame is a lived-in shot containing a child's tricycle, coffee-table clutter and a trailing cord. The end card is a plain white contact slate carrying no proof of the firm's track record."
+      },
+      {
+        "title": "v2 lower-third treatment",
+        "source": "client-supplied render",
+        "angle": "Static bottom-left headline with a gold hairline rule and a 'WA CONSTRUCT' kicker beneath",
+        "what_it_covers": "Identical placement, weight and animation on all seven photo beats; white headline, gold kicker, thin gold rule spanning most of the frame width.",
+        "what_it_misses": "No escalation across the runtime \u2014 beat seven is typeset exactly like beat one, so the edit never builds."
+      },
+      {
+        "title": "v2 end card",
+        "source": "client-supplied render",
+        "angle": "White field contact slate",
+        "what_it_covers": "WA Construct logo lockup, gold hairline rule, 'LIVING INSPIRED.', 'BRUNSWICK', 'BOOK A CONSULTATION', 'WACONSTRUCT.COM | 201-485-8887'.",
+        "what_it_misses": "The white field breaks hard from the warm, dark grade of the seven beats before it; a large dead gap sits between the logo and the rule; and no verified credential (23+ years, SAM Awards, Best of Houzz) appears anywhere."
+      }
+    ],
+    "saturated_angles": [
+      "Bathroom-only coverage: 5 of v2's 7 photo beats are the primary bathroom. The piece reads as a bathroom remodel reel, not a whole-home renovation.",
+      "Static centred lower third repeated identically on all seven beats \u2014 no visual escalation across the runtime.",
+      "Generic white 'contact us' end card \u2014 the most common end-card treatment in the contractor/renovation category and the weakest part of v2."
+    ],
+    "underserved_gaps": [
+      "Three clean, finished living-room frames exist in the Drive folder and none were used; v2 instead used a lived-in shot containing a child's red tricycle, clutter on the coffee table and a trailing power cord.",
+      "A fully staged primary bedroom (dark green accent wall, upholstered bed, symmetrical lamps) exists in the folder and was never used \u2014 it is the strongest 'finished home' frame in the whole set.",
+      "Two finished powder-room frames (round mirror, vessel sink, black floating vanity) exist and were never used.",
+      "The landscape 'finished-primary-bathroom-*' set (1536x1024) is a better 16:9 fit than the portrait 'east_brunswick_*' bath crops (1632x2176) that v2 leaned on.",
+      "The end card carries no proof: no years in business, no awards, despite verified credentials being available."
+    ]
+  },
+  "data_points": [
+    {
+      "claim": "v2 duration is 22.166667s at 1920x1080, 30fps, with a stereo 44.1kHz AAC music bed; mean volume -13.5 dB, peak -0.4 dB.",
+      "source_url": "local://projects/brunswick-renovation-v3/assets/reference/brunswick_v2_reference.mp4",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "The Drive 'Edited' folder holds exactly 25 graded PNG stills; 8 landscape 2304x1536, 8 landscape 1536x1024, 9 east_brunswick frames of which 6 are portrait 1632x2176.",
+      "source_url": "https://drive.google.com/drive/folders/1JBQbIYtQB22dmiTCFiWm2uwAgDFX1mFa",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "v2's 'THE TRANSFORMATION CONTINUES' frame contains a child's red tricycle at frame right, objects scattered on the coffee table, and a black cord running across the floor.",
+      "source_url": "local://scratchpad/lr_17.5.jpg",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "WA Construct verified credentials: 23+ years in business; 2026 SAM Awards in Best Custom Home, Best Kitchen Remodeling and Best Building Renovation; 4x Best of Houzz.",
+      "source_url": "skill://brand-guard/references/wa-construct.md",
+      "credibility": "primary_source"
+    },
+    {
+      "claim": "WA Construct does not market standalone bathroom remodeling \u2014 bathrooms appear only inside larger scopes.",
+      "source_url": "skill://brand-guard/references/wa-construct.md",
+      "credibility": "primary_source"
+    }
+  ],
+  "audience_insights": {
+    "common_questions": [
+      "Is this firm capable of a whole-home scope or just one room?",
+      "What does the finished work actually look like, not the construction process?",
+      "Are they established enough to trust with a large renovation?",
+      "How do I contact them?"
+    ],
+    "misconceptions": [
+      {
+        "myth": "A montage weighted to one room still reads as a whole-home renovation because the title says so.",
+        "reality": "Viewers read the pictures, not the title card. Five of seven bathroom beats makes a design-build firm look like a single-trade bathroom contractor \u2014 which also cuts against WA Construct's rule of never marketing standalone bathroom work.",
+        "source": "v2 teardown + brand-guard/references/wa-construct.md"
+      },
+      {
+        "myth": "A lived-in room proves the home is finished and occupied, which is reassuring.",
+        "reality": "Occupant belongings \u2014 a child's tricycle, objects on the coffee table, a cord across the floor \u2014 read as a real-estate listing photo rather than a builder's finished portfolio, and pull the eye away from the work itself.",
+        "source": "v2 frame at 17.5s"
+      }
+    ],
+    "knowledge_level": "intermediate"
+  },
+  "angles_discovered": [
+    {
+      "name": "Whole-home walkthrough",
+      "hook": "Move room to room \u2014 bath, bedroom, powder room, living room \u2014 so the scope reads as a whole house.",
+      "type": "narrative",
+      "why_now": "Corrects v2's bathroom-heavy weighting and aligns with the brand rule against standalone bathroom marketing."
+    },
+    {
+      "name": "Finished-home close",
+      "hook": "End on staged, finished, uncluttered rooms so the last impression is a home someone lives in beautifully.",
+      "type": "narrative",
+      "why_now": "The unused staged-bedroom and clean living-room frames make this possible without new photography."
+    },
+    {
+      "name": "Earned end card",
+      "hook": "Replace the white contact slate with a dark, on-palette close that carries verified proof (23+ years, SAM Awards, Best of Houzz) alongside the CTA.",
+      "type": "evergreen",
+      "why_now": "The outro is the one element the client explicitly asked to redesign, and verified credentials are available but unused."
+    }
+  ],
+  "visual_references": [
+    {
+      "description": "v2 reference render \u2014 gold-hairline lower third over a warm cinematic grade",
+      "url": "local://projects/brunswick-renovation-v3/assets/reference/brunswick_v2_reference.mp4",
+      "what_works": "The lower third is restrained, legible over busy interiors, and already reads as the series look \u2014 worth preserving for continuity even while the outro changes."
+    },
+    {
+      "description": "Staged primary bedroom, dark green accent wall, upholstered bed, symmetrical lamps",
+      "url": "local://projects/brunswick-renovation-v3/assets/images/source/finished-bedroom-bed-overview.png",
+      "what_works": "The only frame in the set showing a fully styled, lived-in-but-immaculate room; the deep green wall also sits closer to the brand's dark-and-gold register than the coral rooms do."
+    },
+    {
+      "description": "Living room shot clean from the media-wall side, rug squared, nothing on the floor",
+      "url": "local://projects/brunswick-renovation-v3/assets/images/source/finished-living-room-media-wall-view.png",
+      "what_works": "Same room and same warm floor as v2's rejected frame, so it slots in with no grade mismatch \u2014 but with no tricycle, no clutter and no trailing cord."
+    },
+    {
+      "description": "Freestanding tub against the window in landscape orientation",
+      "url": "local://projects/brunswick-renovation-v3/assets/images/source/finished-primary-bathroom-tub-window.png",
+      "what_works": "Native 3:2 framing means a gentle push-in instead of the hard portrait crop v2 needed, so the window light and the marble veining both stay in frame."
+    }
+  ],
+  "sources": [
+    {
+      "url": "local://projects/brunswick-renovation-v3/assets/reference/brunswick_v2_reference.mp4",
+      "title": "Brunswick_WA_Construct_YouTube_v2.mp4 (client-supplied reference render)",
+      "used_for": "Frame-by-frame teardown: beat map, timings, lower-third design, end-card design, audio bed"
+    },
+    {
+      "url": "https://drive.google.com/drive/folders/1V4WS1XGgNLPhgHuxKF2zj-TUTjZKkgbE",
+      "title": "Brunswick ongoing project folder (client Google Drive)",
+      "used_for": "Source of all replacement frames; 'Edited' subfolder holds the 25 graded stills"
+    },
+    {
+      "url": "skill://brand-guard/references/wa-construct.md",
+      "title": "WA Construct brand reference",
+      "used_for": "Palette, phone, URL, tagline, verified awards, no-pricing and no-standalone-bathroom rules"
+    },
+    {
+      "url": "local://projects/brunswick-renovation-v3/assets/images/source/finished-bedroom-bed-overview.png",
+      "title": "finished-bedroom-bed-overview.png (staged primary bedroom)",
+      "used_for": "Identified as the strongest unused frame; anchors the 'finished-home close' angle",
+      "reliability": "primary"
+    },
+    {
+      "url": "local://projects/brunswick-renovation-v3/assets/images/source/finished-living-room-media-wall-view.png",
+      "title": "finished-living-room-media-wall-view.png (clean living room)",
+      "used_for": "Direct replacement for v2's tricycle/clutter living-room frame",
+      "reliability": "primary"
+    },
+    {
+      "url": "local://projects/brunswick-renovation-v3/assets/images/source/finished-powder-room-wide-view.png",
+      "title": "finished-powder-room-wide-view.png (finished powder room)",
+      "used_for": "Adds a third room type to break the bathroom-heavy weighting",
+      "reliability": "primary"
+    },
+    {
+      "url": "local://scratchpad/tile_1.jpg",
+      "title": "v2 contact sheet, frames 0.0-11.5s",
+      "used_for": "Derived the v2 beat map and lower-third design",
+      "reliability": "primary"
+    },
+    {
+      "url": "local://scratchpad/tile_2.jpg",
+      "title": "v2 contact sheet, frames 12.0-22.0s",
+      "used_for": "Derived the v2 end-card design and closing beats",
+      "reliability": "primary"
+    }
+  ],
+  "metadata": {
+    "run_type": "revision",
+    "supersedes": "Brunswick_WA_Construct_YouTube_v2.mp4",
+    "web_searches_executed": 0,
+    "deviation_note": "Web-search success criterion intentionally not met \u2014 see research_summary."
+  }
+}

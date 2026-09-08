@@ -1,0 +1,240 @@
+{
+  "version": "1.0",
+  "concept_options": [
+    {
+      "id": "c1",
+      "title": "Room to Room",
+      "hook": "One home, four finished rooms \u2014 the scope reads as a whole house, not a bathroom.",
+      "narrative_structure": "journey",
+      "visual_approach": "Nine still-led beats that walk the house in order \u2014 bath, powder room, bedroom, living room \u2014 each on a slow, single-direction Ken Burns move. Keeps v2's gold-hairline lower third for series continuity but rebalances the room mix so no single space owns more than three beats. Closes on the redesigned outro.",
+      "suggested_playbook": "clean-professional",
+      "target_audience": "NJ homeowners researching a whole-home renovation or addition",
+      "target_platform": "youtube",
+      "target_duration_seconds": 26,
+      "key_points": [
+        "The renovation covers primary bath, powder room, bedroom and living space",
+        "The finished rooms are styled and move-in ready",
+        "WA Construct has 23+ years, 2026 SAM Awards and 4x Best of Houzz"
+      ],
+      "core_message": "WA Construct renovates whole homes, not single rooms.",
+      "cta": "Book a consultation at waconstruct.com",
+      "tone": "warm, confident, unhurried",
+      "grounded_in": [
+        "landscape.saturated_angles: 5 of 7 v2 beats are the primary bathroom",
+        "angles_discovered: Whole-home walkthrough",
+        "brand rule: no standalone bathroom marketing"
+      ],
+      "why_this_works": "The single largest defect in v2 is that a whole-home renovation reads as a bathroom remodel \u2014 five of seven photo beats are the same room, which also cuts against WA Construct's rule of never marketing standalone bathroom work. Rebalancing the shot list is the cheapest, highest-leverage fix available, and every frame needed already exists in the Drive folder."
+    },
+    {
+      "id": "c2",
+      "title": "Before the Finish",
+      "hook": "Start in the unfinished rooms, end in the styled ones \u2014 the transformation is the story.",
+      "narrative_structure": "timeline",
+      "visual_approach": "Opens on the raw/empty rooms (coral bedroom, bare hallway, empty living room) held slightly longer and graded a touch cooler, then turns at the midpoint into the finished, styled spaces with warmer grade and tighter cuts. The lower third escalates: sparse early, fuller at the turn.",
+      "suggested_playbook": "clean-professional",
+      "target_audience": "Homeowners who want proof a builder finishes what it starts",
+      "target_platform": "youtube",
+      "target_duration_seconds": 28,
+      "key_points": [
+        "The same house is shown unfinished and then finished",
+        "The finish level rises visibly across the runtime",
+        "WA Construct carries a project from bare rooms to styled spaces"
+      ],
+      "core_message": "They take a house apart and put it back together better.",
+      "cta": "Book a consultation at waconstruct.com",
+      "tone": "documentary, building, earned",
+      "grounded_in": [
+        "landscape.existing_content: v2 has no escalation, beat seven is typeset like beat one",
+        "angles_discovered: Finished-home close"
+      ],
+      "why_this_works": "v2 has no arc \u2014 seven interchangeable beats in a row. A before/after turn gives the edit somewhere to go and makes the music's build land on something. The risk is honest: the folder's unfinished frames are empty rooms rather than true construction shots, so the 'before' half is less dramatic than a real demo-to-done reel would be."
+    },
+    {
+      "id": "c3",
+      "title": "Material Study",
+      "hook": "Hold on the surfaces \u2014 the marble, the brass, the joinery \u2014 and let the craft speak.",
+      "narrative_structure": "story",
+      "visual_approach": "Detail-led. Leans on the tight frames (gold faucet macro, shower fixtures, countertop edge, vanity light) intercut with two or three wide establishing shots. Longer holds, slower moves, minimal type.",
+      "suggested_playbook": "premium-minimalist",
+      "target_audience": "Design-led buyers and architects/designers scouting a builder",
+      "target_platform": "youtube",
+      "target_duration_seconds": 24,
+      "key_points": [
+        "The specification level is high-end",
+        "Finish carpentry and fixture selection are deliberate",
+        "WA Construct is a design-build firm, not a general trades contractor"
+      ],
+      "core_message": "The detail level is the proof.",
+      "cta": "Book a consultation at waconstruct.com",
+      "tone": "quiet, premium, restrained",
+      "grounded_in": [
+        "landscape.underserved_gaps: landscape finished-primary-bathroom set is a better 16:9 fit",
+        "visual_references: countertop and shower detail frames"
+      ],
+      "why_this_works": "The strongest photography in the set is the detail work. But this concept fights the brief: the detail frames are overwhelmingly bathroom, so it would deepen exactly the room imbalance the client's revision is meant to fix. Listed for completeness, not recommended."
+    }
+  ],
+  "selected_concept": {
+    "concept_id": "c1",
+    "rationale": "Recommended, pending your approval. c1 is the only option that fixes the defect you actually raised (the living-room frame) while also correcting the room imbalance that makes a whole-home renovation read as a bathroom remodel \u2014 which is a brand rule, not a taste call. c2 is the more interesting film but its 'before' half is empty rooms rather than real construction, so it promises more than the footage delivers. c3 is beautiful and wrong for this brief: it would make the piece even more bathroom-heavy."
+  },
+  "production_plan": {
+    "pipeline": "cinematic",
+    "playbook": "clean-professional",
+    "render_runtime": "remotion",
+    "stages": [
+      {
+        "stage": "script",
+        "tools": [],
+        "approach": "Write the nine-beat title-card map: headline copy per beat, hold durations, and the outro copy block. No narration \u2014 the piece stays music-only as in v2."
+      },
+      {
+        "stage": "scene_plan",
+        "tools": [
+          {
+            "tool_name": "frame_sampler",
+            "role": "Verify chosen stills crop cleanly to 16:9 and check safe-area for the lower third",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0
+          }
+        ],
+        "approach": "Lock the shot list to specific PNG filenames, assign each a Ken Burns direction and scale so consecutive beats never move the same way, and set the crop window for each so nothing important sits under the lower third."
+      },
+      {
+        "stage": "assets",
+        "tools": [
+          {
+            "tool_name": "color_grade",
+            "role": "Match the finished-* set to the east_brunswick set so the grade holds across the cut",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0
+          },
+          {
+            "tool_name": "audio_mixer",
+            "role": "Reuse and re-time the approved v2 music bed to the new runtime",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0
+          }
+        ],
+        "approach": "All 25 graded stills are already downloaded from the client's Drive folder. No image generation, no stock, no TTS. Music is the exact bed extracted from the approved v2 render, extended or trimmed to the new runtime with a clean tail fade."
+      },
+      {
+        "stage": "edit",
+        "tools": [],
+        "approach": "Write edit_decisions: cut points, per-beat Ken Burns parameters, lower-third in/out timing, outro timing, and the audio fade map. render_runtime carried through from this proposal unchanged."
+      },
+      {
+        "stage": "compose",
+        "tools": [
+          {
+            "tool_name": "video_compose",
+            "role": "Render the hand-authored composition to 1920x1080 H.264",
+            "provider": "remotion",
+            "available": true,
+            "estimated_cost_usd": 0
+          },
+          {
+            "tool_name": "audio_mixer",
+            "role": "Mux and level the music bed",
+            "provider": "ffmpeg",
+            "available": true,
+            "estimated_cost_usd": 0
+          }
+        ],
+        "approach": "Hand-authored (atelier) Remotion composition rather than the stock scene-type catalog: a bespoke KenBurnsPhoto scene, the existing lower-third redrawn as a component, and the chosen outro built as its own scene with real motion. Rendered at 1920x1080/30fps to match v2.",
+        "fallback_if_unavailable": "BLOCKER, not a substitution. If Remotion stops resolving, stop and escalate \u2014 do not silently drop to FFmpeg Ken Burns, which would flatten the outro motion."
+      }
+    ],
+    "quality_tradeoffs": [
+      {
+        "tradeoff": "Reuse the v2 music bed (free, already approved) vs source a new track",
+        "recommendation": "Reuse the v2 bed",
+        "quality_impact": "No music-generation provider is configured on this machine, so a new track would mean you sourcing one. The v2 bed is already signed off and keeps v3 recognisably the same series."
+      },
+      {
+        "tradeoff": "Hand-authored (atelier) Remotion composition vs the stock scene-type catalog",
+        "recommendation": "Hand-author it",
+        "quality_impact": "The stock catalog cannot produce the outro you asked for \u2014 it would give you another centred text card. Hand-authoring costs more build time but is the only way the outro redesign is real."
+      },
+      {
+        "tradeoff": "Landscape finished-primary-bathroom stills (1536x1024, needs 1.25x upscale) vs portrait east_brunswick stills (1632x2176, native res but hard crop)",
+        "recommendation": "Prefer the landscape set for wides, keep two portrait frames for tight details",
+        "quality_impact": "The 1.25x upscale is invisible at 1080p; the portrait crop was visibly tight in v2 and threw away the window light."
+      }
+    ],
+    "alternative_paths": [
+      {
+        "description": "HyperFrames (HTML/CSS/GSAP) instead of Remotion for the whole piece",
+        "total_cost_usd": 0.0,
+        "quality_level": "standard"
+      },
+      {
+        "description": "FFmpeg-only Ken Burns concat with a static PNG outro",
+        "total_cost_usd": 0.0,
+        "quality_level": "budget"
+      }
+    ]
+  },
+  "cost_estimate": {
+    "total_estimated_usd": 0.0,
+    "budget_verdict": "within_budget",
+    "budget_cap_usd": 2.0,
+    "line_items": [
+      {
+        "tool": "video_compose",
+        "operation": "Remotion render, ~26s at 1920x1080/30fps",
+        "quantity": 1,
+        "estimated_usd": 0.0,
+        "notes": "Local render, no API cost"
+      },
+      {
+        "tool": "audio_mixer",
+        "operation": "Re-time and fade the reused v2 music bed",
+        "quantity": 1,
+        "estimated_usd": 0.0,
+        "notes": "Local ffmpeg"
+      },
+      {
+        "tool": "color_grade",
+        "operation": "Grade-match the finished-* stills to the east_brunswick set",
+        "quantity": 9,
+        "estimated_usd": 0.0,
+        "notes": "Local ffmpeg"
+      },
+      {
+        "tool": "google_drive",
+        "operation": "Download 25 graded source stills",
+        "quantity": 25,
+        "estimated_usd": 0.0,
+        "notes": "Already complete"
+      }
+    ],
+    "savings_options": [
+      "Nothing to save \u2014 the whole run is local. No image, video, TTS or music generation provider is configured, and none is needed."
+    ]
+  },
+  "approval": {
+    "status": "pending"
+  },
+  "metadata": {
+    "run_type": "revision",
+    "supersedes": "Brunswick_WA_Construct_YouTube_v2.mp4",
+    "user_requests": [
+      "Use other frames from the Brunswick Drive folder",
+      "Replace the living-room frame showing a child's tricycle",
+      "Redesign the outro"
+    ],
+    "open_questions": [
+      "v2's end card says 'BRUNSWICK' but every source filename says 'east_brunswick'. Confirm whether the location line should read Brunswick, East Brunswick, or be dropped."
+    ],
+    "outro_mockups": [
+      "outro_a_dark_card.png",
+      "outro_b_photo_scrim.png",
+      "outro_c_split_lockup.png"
+    ]
+  }
+}

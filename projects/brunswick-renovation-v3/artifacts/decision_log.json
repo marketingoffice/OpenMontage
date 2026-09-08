@@ -1,0 +1,236 @@
+{
+  "version": "1.0",
+  "project_id": "brunswick-renovation-v3",
+  "decisions": [
+    {
+      "decision_id": "d-001",
+      "stage": "proposal",
+      "category": "pipeline_selection",
+      "subject": "Pipeline for the Brunswick v3 revision",
+      "options_considered": [
+        {
+          "option_id": "cinematic",
+          "label": "cinematic",
+          "score": 0.95,
+          "reason": "Mood-led montage built from supplied stills with a music-only bed \u2014 exactly this pipeline's remit, and it gates proposal/script/scene_plan/assets so the client sees the shot list before render."
+        },
+        {
+          "option_id": "hybrid",
+          "label": "hybrid",
+          "score": 0.4,
+          "reason": "Designed for source footage plus support visuals.",
+          "rejected_because": "There is no video source and no support visuals to generate; the extra machinery buys nothing."
+        },
+        {
+          "option_id": "animation",
+          "label": "animation",
+          "score": 0.2,
+          "reason": "Motion-graphics-first.",
+          "rejected_because": "The deliverable is photography-led; an animation pipeline would fight the material."
+        }
+      ],
+      "selected": "cinematic",
+      "reason": "Still-led, music-only, mood-driven brand montage from client-supplied photography.",
+      "confidence": 0.92
+    },
+    {
+      "decision_id": "d-002",
+      "stage": "proposal",
+      "category": "render_runtime_selection",
+      "subject": "Composition runtime for the v3 render",
+      "options_considered": [
+        {
+          "option_id": "remotion",
+          "label": "Remotion (React scene components)",
+          "score": 0.9,
+          "reason": "All nine beats are stills needing precise, individually-parameterised Ken Burns moves plus a typographic overlay that must sit identically on every beat. React props over a frame counter make that exact and repeatable, and the outro's staggered type reveal is straightforward with spring physics. Was NOT available at session start (node_modules missing); installed during preflight and re-verified as available."
+        },
+        {
+          "option_id": "hyperframes",
+          "label": "HyperFrames (HTML/CSS/GSAP)",
+          "score": 0.72,
+          "reason": "Genuinely available and genuinely good here \u2014 the outro is typographic and GSAP would express the staggered reveal naturally. Tradeoff: the nine photo beats are the bulk of the piece and are image-transform work, not typography, so HyperFrames' strength applies to about four seconds of a twenty-six second video."
+        },
+        {
+          "option_id": "ffmpeg",
+          "label": "FFmpeg zoompan concat",
+          "score": 0.25,
+          "reason": "Always available and would handle the Ken Burns beats.",
+          "rejected_because": "Cannot produce a designed, animated outro \u2014 it would force a static PNG end card, which is the one thing the client explicitly asked to change."
+        }
+      ],
+      "selected": "remotion",
+      "reason": "Recommended pending client approval. Both Remotion and HyperFrames are available on this machine and both were presented. Remotion wins on weight of work: nine parameterised still-motion beats dominate the runtime, and the redesigned outro is well within what Remotion can express. HyperFrames is the honest runner-up and would be the pick if the piece were mostly kinetic typography.",
+      "confidence": 0.8
+    },
+    {
+      "decision_id": "d-003",
+      "stage": "proposal",
+      "category": "composition_mode",
+      "subject": "Authoring mode for the composition",
+      "options_considered": [
+        {
+          "option_id": "atelier",
+          "label": "Hand-authored composition",
+          "score": 0.9,
+          "reason": "The brief is a redesign request on a brand deliverable. The outro in particular has to be new, not a restyled stock card."
+        },
+        {
+          "option_id": "templated",
+          "label": "Stock cut.type scene catalog",
+          "score": 0.3,
+          "reason": "Fast and reliable.",
+          "rejected_because": "text_card/hero_title would produce another centred contact slate \u2014 the exact thing being replaced. Templated cannot satisfy the ask."
+        }
+      ],
+      "selected": "atelier",
+      "reason": "The client asked for a redesign; a template cannot deliver one. Costs more build time, which is disclosed in the proposal.",
+      "confidence": 0.88
+    },
+    {
+      "decision_id": "d-004",
+      "stage": "proposal",
+      "category": "music_source",
+      "subject": "Music bed for v3",
+      "options_considered": [
+        {
+          "option_id": "reuse_v2",
+          "label": "Reuse the music bed extracted from the approved v2 render",
+          "score": 0.92,
+          "reason": "Already client-approved, keeps v3 in the same series, free, and available right now. Extracted at 22.17s, -13.5 dB mean / -0.4 dB peak; will need a loop-extend or hold to cover a ~26s runtime."
+        },
+        {
+          "option_id": "music_library",
+          "label": "Track from music_library/",
+          "score": 0.0,
+          "reason": "Checked \u2014 the folder does not exist on this machine and holds no tracks.",
+          "rejected_because": "No tracks available."
+        },
+        {
+          "option_id": "generate",
+          "label": "Generate a new track via a music API",
+          "score": 0.0,
+          "reason": "Registry reports music_generation 0 of 3 configured \u2014 no provider has credentials.",
+          "rejected_because": "No music-generation provider is configured; this path is blocked, not merely expensive."
+        },
+        {
+          "option_id": "pixabay",
+          "label": "pixabay_music search",
+          "score": 0.35,
+          "reason": "music_search reports pixabay_music as available, so a royalty-free track could be sourced.",
+          "rejected_because": "Swapping the track changes the character of an already-approved piece; not requested by the client."
+        },
+        {
+          "option_id": "none",
+          "label": "No music",
+          "score": 0.05,
+          "reason": "Silent montage.",
+          "rejected_because": "v2 is music-led and the cut is paced to the bed."
+        }
+      ],
+      "selected": "reuse_v2",
+      "reason": "Recommended pending approval. It is the only free, already-approved option, and the client asked for three specific changes \u2014 none of them audio.",
+      "confidence": 0.9
+    },
+    {
+      "decision_id": "d-005",
+      "stage": "proposal",
+      "category": "concept_selection",
+      "subject": "Creative direction for v3",
+      "options_considered": [
+        {
+          "option_id": "c1",
+          "label": "Room to Room",
+          "score": 0.9,
+          "reason": "Fixes the tricycle frame and the bathroom-heavy weighting in one move, using frames that already exist."
+        },
+        {
+          "option_id": "c2",
+          "label": "Before the Finish",
+          "score": 0.6,
+          "reason": "Gives the edit a real arc.",
+          "rejected_because": "The folder's 'before' frames are empty rooms, not construction \u2014 the before/after turn would under-deliver on its own promise."
+        },
+        {
+          "option_id": "c3",
+          "label": "Material Study",
+          "score": 0.35,
+          "reason": "Uses the strongest photography in the set.",
+          "rejected_because": "The detail frames are almost all bathroom, so it would worsen the room imbalance the revision exists to fix, and cuts against the brand rule on standalone bathroom marketing."
+        }
+      ],
+      "selected": "c1",
+      "reason": "Recommended pending approval \u2014 the only concept that serves the stated request and the brand rule at the same time.",
+      "confidence": 0.85
+    },
+    {
+      "decision_id": "d-006",
+      "stage": "proposal",
+      "category": "visual_accuracy_check",
+      "subject": "Replacement frame for the living-room beat containing a child's tricycle",
+      "options_considered": [
+        {
+          "option_id": "lr_media_wall",
+          "label": "finished-living-room-media-wall-view.png",
+          "score": 0.93,
+          "reason": "Same room, same warm floor and wall tone as the rejected frame, shot from the opposite side. No tricycle, no coffee-table clutter, no floor cord, rug squared to the room. Native 2304x1536, so it crops to 16:9 with room to spare."
+        },
+        {
+          "option_id": "lr_window_wall",
+          "label": "finished-living-room-window-wall-wide.png",
+          "score": 0.7,
+          "reason": "Clean French-door wall with strong daylight.",
+          "rejected_because": "A corner of the sofa intrudes at frame left and the room reads emptier \u2014 better as a second living-room beat than as the replacement."
+        },
+        {
+          "option_id": "eb11",
+          "label": "east_brunswick_11_living_room.png",
+          "score": 0.6,
+          "reason": "Graded to match the rest of the east_brunswick set and also tricycle-free.",
+          "rejected_because": "The sofa dominates the foreground and the room reads as furniture rather than architecture."
+        },
+        {
+          "option_id": "keep",
+          "label": "Keep the v2 frame",
+          "score": 0.0,
+          "reason": "No work.",
+          "rejected_because": "The client explicitly rejected it."
+        }
+      ],
+      "selected": "lr_media_wall",
+      "reason": "Closest match to the frame being replaced, so it slots in with no grade break, while removing every object the client objected to.",
+      "confidence": 0.9
+    },
+    {
+      "decision_id": "d-007",
+      "stage": "proposal",
+      "category": "playbook_selection",
+      "subject": "Style playbook",
+      "options_considered": [
+        {
+          "option_id": "clean-professional",
+          "label": "clean-professional",
+          "score": 0.88,
+          "reason": "Matches the restrained, warm, type-light grammar v2 already established and the brand's black-and-gold palette."
+        },
+        {
+          "option_id": "premium-minimalist",
+          "label": "premium-minimalist",
+          "score": 0.6,
+          "reason": "Would suit the detail photography.",
+          "rejected_because": "Pulls toward the c3 material-study direction, which is not the selected concept."
+        },
+        {
+          "option_id": "flat-motion-graphics",
+          "label": "flat-motion-graphics",
+          "score": 0.15,
+          "reason": "Pipeline's nominal default.",
+          "rejected_because": "Graphic, high-energy motion would be wrong over architectural photography and off-brand for this firm."
+        }
+      ],
+      "selected": "clean-professional",
+      "reason": "Preserves series continuity with v2 while leaving room for the new outro.",
+      "confidence": 0.85
+    }
+  ]
+}
